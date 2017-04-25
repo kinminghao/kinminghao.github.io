@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="金额,java,BigDecimal," />
+  <meta name="keywords" content="java,金额,BigDecimal," />
 
 
 
@@ -92,14 +92,17 @@
 
 
 
-<meta name="keywords" content="金额,java,BigDecimal">
+<meta name="description" content="商业用途之中,我们经常出现对于数字的金额的处理. 比如金额一万三千元零两块四毛,数字写作13000.24, 但是在显示的处理以及在会计的计算中,经常会使用会计写法13,000.24.所以有些时候我们需要将数字直接转换为此类表示形式">
+<meta name="keywords" content="java,金额,BigDecimal">
 <meta property="og:type" content="article">
 <meta property="og:title" content="货币金额计算">
 <meta property="og:url" content="http://yoursite.com/2017/04/25/货币金额计算/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:updated_time" content="2017-04-25T15:07:13.000Z">
+<meta property="og:description" content="商业用途之中,我们经常出现对于数字的金额的处理. 比如金额一万三千元零两块四毛,数字写作13000.24, 但是在显示的处理以及在会计的计算中,经常会使用会计写法13,000.24.所以有些时候我们需要将数字直接转换为此类表示形式">
+<meta property="og:updated_time" content="2017-04-25T15:30:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="货币金额计算">
+<meta name="twitter:description" content="商业用途之中,我们经常出现对于数字的金额的处理. 比如金额一万三千元零两块四毛,数字写作13000.24, 但是在显示的处理以及在会计的计算中,经常会使用会计写法13,000.24.所以有些时候我们需要将数字直接转换为此类表示形式">
 
 
 
@@ -342,7 +345,15 @@
       
 
       
-        
+        <p>商业用途之中,我们经常出现对于数字的金额的处理.</p>
+<p>比如金额<em>一万三千元零两块四毛</em>,数字写作<code>13000.24</code>, 但是在显示的处理以及在会计的计算中,经常会使用会计写法<code>13,000.24</code>.所以有些时候我们需要将数字直接转换为此类表示形式<br><a id="more"></a><br>所以今天涉及到了<code>java.text.NumberFormat</code>类.<br>举个栗子:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BigDecimal money = <span class="keyword">new</span> BigDecimal(<span class="string">"1021380124.127"</span>);</div><div class="line">NumberFormat format = NumberFormat.getCurrencyInstance();</div><div class="line">System.out.println(format.format(money));   <span class="comment">//￥1,021,380,124.127</span></div></pre></td></tr></table></figure></p>
+<p>针对<code>getCurrencyInstance</code>方法, format 方法能够将传入的数字转换成金额格式,并且转换成金额的显示方式并在前面加上人民币标识符.</p>
+<p>当然我们还有最常规的模式:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BigDecimal money = <span class="keyword">new</span> BigDecimal(<span class="string">"1021380124.127"</span>);</div><div class="line">NumberFormat format = NumberFormat.getNumberInstance();</div><div class="line">System.out.println(format.format(money));   <span class="comment">//1,021,380,124.127</span></div></pre></td></tr></table></figure></p>
+<p><code>getNumberInstance</code>方法会对数字进行正常的格式划分;<br>而<code>getIntegerInstance</code>方法会对数字进行整数的四舍五入:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BigDecimal money = <span class="keyword">new</span> BigDecimal(<span class="string">"1021380124.127"</span>);</div><div class="line">NumberFormat format = NumberFormat.getIntegerInstance();</div><div class="line">System.out.println(format.format(money));   <span class="comment">//1,021,380,124</span></div></pre></td></tr></table></figure></p>
+<p>除了这些<code>format</code> 方法允许传入多种类型的参数,比如整形, double,long, 以及一些 object 类型.比如 BigDecimal.<br>但是无法处理字符串类型,如果传入字符串类型就会抛出异常<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.IllegalArgumentException: Cannot format given Object as a Number</div></pre></td></tr></table></figure></p>
+<hr>
+<p>针对此方法之后还会进一步的学习,届时将会进一步更新此目录</p>
+
       
     </div>
 
@@ -371,9 +382,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/金额/" rel="tag"># 金额</a>
-          
             <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/金额/" rel="tag"># 金额</a>
           
             <a href="/tags/BigDecimal/" rel="tag"># BigDecimal</a>
           
@@ -387,6 +398,10 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/25/当-java-中遇到-scala-中的-Seq-对象/" rel="next" title="当 java 遇到 scala 中的 Seq 对象">
+                <i class="fa fa-chevron-left"></i> 当 java 遇到 scala 中的 Seq 对象
+              </a>
             
           </div>
 
@@ -459,7 +474,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -472,7 +487,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">Tags</span>
               
             </div>

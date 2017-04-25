@@ -5,7 +5,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-04-25T15:07:13.000Z</updated>
+  <updated>2017-04-25T15:57:29.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,20 +16,64 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>货币金额计算</title>
-    <link href="http://yoursite.com/2017/04/25/%E8%B4%A7%E5%B8%81%E9%87%91%E9%A2%9D%E8%AE%A1%E7%AE%97/"/>
-    <id>http://yoursite.com/2017/04/25/货币金额计算/</id>
-    <published>2017-04-25T15:06:04.000Z</published>
-    <updated>2017-04-25T15:07:13.000Z</updated>
+    <title>当 java 遇到 scala 中的 Seq 对象</title>
+    <link href="http://yoursite.com/2017/04/25/%E5%BD%93-java-%E4%B8%AD%E9%81%87%E5%88%B0-scala-%E4%B8%AD%E7%9A%84-Seq-%E5%AF%B9%E8%B1%A1/"/>
+    <id>http://yoursite.com/2017/04/25/当-java-中遇到-scala-中的-Seq-对象/</id>
+    <published>2017-04-25T15:31:46.000Z</published>
+    <updated>2017-04-25T15:57:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天在工作中遇到了一个很有意思的情况.<br>我们都知道 java 和 scala 代码由于是基于同一套 jvm 环境上运行的语言.所以在代码中是可以互相调用的.所以今天在调用同事写的代码的时候遇到了一个很有趣的问题.<br><a id="more"></a><br>首先,他传给了我一个 scala 的 case class 对象:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderEvent</span>(<span class="params">products: <span class="type">Seq</span>[<span class="type">ProductInfo</span>]</span>)</span></div></pre></td></tr></table></figure></p>
+<p>这个订单对象里有对应的产品列表.<br>于是有意思的事情出现了.当我获取到了对应的产品列表之后:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">event.products()</div><div class="line"><span class="comment">//返回类型:scala.collection.Seq&lt;ProductInfo&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这个时候我在获得到的对象中获取对应的方法能够获取非常多的方法.包括<code>Seq</code> 中非常常见的 <code>map</code>,<code>flatMap</code>,<code>forEach</code>,<code>filter</code>等方法.但是,事实证明,这不太好用.虽然 java8 中已经支持了函数式编程.但是显然还不能够支持 scala 中的集合方法.</p>
+<p>所以我又把目标转到了转换类型方法中去.<br>于是我又发现了<code>toList</code>方法,但是很遗憾的是.我获得到了 scala 中的 <code>List</code>, 仍然不能正常的使用.从 java 中找到 scala 中的 <code>as[]</code> 方法以及<code>toJava</code> 方法显然也有些异想天开.</p>
+<p>最后我只能从方法中找到了一个<code>iterator</code>方法,他可以获得一个<code>Iterator</code>对象.当然…这个对象也是 scala 中的.不过它同时具有的 <code>hasNext</code> 方法以及 <code>next</code> 方法为我提供了一个while循环的可能性.</p>
+<hr>
+<p>这个问题目前没有结束,日后我会继续对这个问题进行研究.期待下一篇能够解决此问题</p>
+]]></content>
     
     <summary type="html">
+    
+      &lt;p&gt;今天在工作中遇到了一个很有意思的情况.&lt;br&gt;我们都知道 java 和 scala 代码由于是基于同一套 jvm 环境上运行的语言.所以在代码中是可以互相调用的.所以今天在调用同事写的代码的时候遇到了一个很有趣的问题.&lt;br&gt;
     
     </summary>
     
     
-      <category term="金额" scheme="http://yoursite.com/tags/%E9%87%91%E9%A2%9D/"/>
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="scala" scheme="http://yoursite.com/tags/scala/"/>
+    
+      <category term="Seq" scheme="http://yoursite.com/tags/Seq/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>货币金额计算</title>
+    <link href="http://yoursite.com/2017/04/25/%E8%B4%A7%E5%B8%81%E9%87%91%E9%A2%9D%E8%AE%A1%E7%AE%97/"/>
+    <id>http://yoursite.com/2017/04/25/货币金额计算/</id>
+    <published>2017-04-25T15:06:04.000Z</published>
+    <updated>2017-04-25T15:30:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>商业用途之中,我们经常出现对于数字的金额的处理.</p>
+<p>比如金额<em>一万三千元零两块四毛</em>,数字写作<code>13000.24</code>, 但是在显示的处理以及在会计的计算中,经常会使用会计写法<code>13,000.24</code>.所以有些时候我们需要将数字直接转换为此类表示形式<br><a id="more"></a><br>所以今天涉及到了<code>java.text.NumberFormat</code>类.<br>举个栗子:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BigDecimal money = <span class="keyword">new</span> BigDecimal(<span class="string">"1021380124.127"</span>);</div><div class="line">NumberFormat format = NumberFormat.getCurrencyInstance();</div><div class="line">System.out.println(format.format(money));   <span class="comment">//￥1,021,380,124.127</span></div></pre></td></tr></table></figure></p>
+<p>针对<code>getCurrencyInstance</code>方法, format 方法能够将传入的数字转换成金额格式,并且转换成金额的显示方式并在前面加上人民币标识符.</p>
+<p>当然我们还有最常规的模式:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BigDecimal money = <span class="keyword">new</span> BigDecimal(<span class="string">"1021380124.127"</span>);</div><div class="line">NumberFormat format = NumberFormat.getNumberInstance();</div><div class="line">System.out.println(format.format(money));   <span class="comment">//1,021,380,124.127</span></div></pre></td></tr></table></figure></p>
+<p><code>getNumberInstance</code>方法会对数字进行正常的格式划分;<br>而<code>getIntegerInstance</code>方法会对数字进行整数的四舍五入:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BigDecimal money = <span class="keyword">new</span> BigDecimal(<span class="string">"1021380124.127"</span>);</div><div class="line">NumberFormat format = NumberFormat.getIntegerInstance();</div><div class="line">System.out.println(format.format(money));   <span class="comment">//1,021,380,124</span></div></pre></td></tr></table></figure></p>
+<p>除了这些<code>format</code> 方法允许传入多种类型的参数,比如整形, double,long, 以及一些 object 类型.比如 BigDecimal.<br>但是无法处理字符串类型,如果传入字符串类型就会抛出异常<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.IllegalArgumentException: Cannot format given Object as a Number</div></pre></td></tr></table></figure></p>
+<hr>
+<p>针对此方法之后还会进一步的学习,届时将会进一步更新此目录</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;商业用途之中,我们经常出现对于数字的金额的处理.&lt;/p&gt;
+&lt;p&gt;比如金额&lt;em&gt;一万三千元零两块四毛&lt;/em&gt;,数字写作&lt;code&gt;13000.24&lt;/code&gt;, 但是在显示的处理以及在会计的计算中,经常会使用会计写法&lt;code&gt;13,000.24&lt;/code&gt;.所以有些时候我们需要将数字直接转换为此类表示形式&lt;br&gt;
+    
+    </summary>
+    
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="金额" scheme="http://yoursite.com/tags/%E9%87%91%E9%A2%9D/"/>
     
       <category term="BigDecimal" scheme="http://yoursite.com/tags/BigDecimal/"/>
     
