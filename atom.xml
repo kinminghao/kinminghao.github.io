@@ -5,7 +5,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-04-26T06:06:24.000Z</updated>
+  <updated>2017-04-26T16:33:30.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,88 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>当 java 遇到 scala 中的 Seq 对象</title>
+    <title>Java异步调用</title>
+    <link href="http://yoursite.com/2017/04/26/java%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8/"/>
+    <id>http://yoursite.com/2017/04/26/java异步调用/</id>
+    <published>2017-04-26T15:42:25.000Z</published>
+    <updated>2017-04-26T16:33:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在我们对 Scala 的使用过程之中.我们会频繁的用到一类方法,称为<em>异步方法</em>.<br>在 Scala 中也是我们最熟悉的 <code>scala.concurrent.Future</code>.不了解相关内容的可以去看 <code>Future</code> 相关的博客.</p>
+<p>通过对 <code>Future</code> 方法的调用,我们可以特别优雅的方式实现异步的调用.也就是类似多线程的使用.</p>
+<p>在 Java 中,代码大部分都是同步执行的.简单的来说,就是做一顿饭我先刷锅,再淘米.等米饭做熟了再去洗碗洗菜炒菜盛饭盛菜摆桌吃饭.</p>
+<p>有了异步方法,我们就可以做到先刷锅刷碗,在淘米做饭的空闲功夫去洗菜炒菜做饭.大大节省我们的程序的运行效率.</p>
+<p><code>FutureTask</code>是<code>Future</code>接口的一个实现类,它是从 Java 1.5 开始引入的.通过它能够控制它的执行方法的行为.其具体的内容是通过 <code>Callable</code>接口来实现的.</p>
+<blockquote>
+<p><code>FutureTask</code>有7个状态,其中数值从小到大:<br><code>NEW</code> <code>COMPLETING</code> <code>NORMAL</code> <code>EXCEPTIONAL</code> <code>CANCELLED</code> <code>INTERRUPTING</code> <code>INTERRUPTED</code><br>其中,状态有几个可能的流转方式:</p>
+<ol>
+<li>新建 -&gt; 完成中 -&gt; 普通</li>
+<li>新建 -&gt; 完成中 -&gt; 异常</li>
+<li>新建 -&gt; 取消</li>
+<li>新建 -&gt; 打断中 -&gt; 打断</li>
+</ol>
+<p><code>FutureTask</code> 有许多方法,包括:</p>
+<ul>
+<li><code>isCancelled</code> 方法 : 返回是否取消(当状态是后面三种情况时)</li>
+<li><code>isDone</code> 方法 : 返回是否处理(当状态不是新建时)</li>
+<li><code>cancel</code> 方法 : 试图取消方法(状态可能变成取消或者被打断)</li>
+<li><code>get</code> 方法 : 获取到方法的返回值,如果传入了时间并且超时的话会抛出异常</li>
+</ul>
+</blockquote>
+<p><code>FutureTask</code>的构造器传入一个 <code>Callable</code> 对象,它和 <code>Runnable</code> 的主要区别是:</p>
+<table>
+<thead>
+<tr>
+<th><code>Callable</code></th>
+<th><code>Runnable</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实现 <code>call</code> 方法</td>
+<td>实现 <code>run</code> 方法</td>
+</tr>
+<tr>
+<td>可获得返回结果</td>
+<td>不能直接获得结果</td>
+</tr>
+<tr>
+<td>可以抛出异常</td>
+<td>不能抛出异常</td>
+</tr>
+</tbody>
+</table>
+<p>接下来我们直接看代码实现;</p>
+<p>首先我有五个获取对应的信息的方法<code>getGeneral</code>.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//先建立了一个拥有五个线程的线程池</span></div><div class="line">ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">5</span>);</div><div class="line"><span class="comment">//分别建立了对应的五个异步对象</span></div><div class="line">FutureTask&lt;JSONObject&gt; generalA = getGeneral(receiver, MessageType.A);</div><div class="line">FutureTask&lt;JSONObject&gt; generalB = getGeneral(receiver, MessageType.B);</div><div class="line">FutureTask&lt;JSONObject&gt; generalC = getGeneral(receiver, MessageType.C);</div><div class="line">FutureTask&lt;JSONObject&gt; generalD = getGeneral(receiver, MessageType.D);</div><div class="line">FutureTask&lt;JSONObject&gt; generalE = getGeneral(receiver, MessageType.E);</div><div class="line"><span class="comment">//对五个异步对象进行执行</span></div><div class="line">executorService.execute(generalA);</div><div class="line">executorService.execute(generalB);</div><div class="line">executorService.execute(generalC);</div><div class="line">executorService.execute(generalD);</div><div class="line">executorService.execute(generalE);</div><div class="line"><span class="comment">//获取到五个对应的异步结果,时间取决于最慢的一个异步方法</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    response.put(<span class="string">"a_result"</span>, generalA.get());</div><div class="line">    response.put(<span class="string">"b_result"</span>, generalB.get());</div><div class="line">    response.put(<span class="string">"c_result"</span>, generalC.get());</div><div class="line">    response.put(<span class="string">"d_result"</span>, generalD.get());</div><div class="line">    response.put(<span class="string">"e_result"</span>, generalE.get());</div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">finally</span> &#123;</div><div class="line">    <span class="comment">//在所有结束情形下关闭线程池,回收资源</span></div><div class="line">    executorService.shutdown();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>下面是<code>getGeneral</code>的代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> FutureTask&lt;JSONObject&gt; <span class="title">getGeneral</span><span class="params">(String receiver, MessageType messageType)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> FutureTask&lt;JSONObject&gt;(<span class="keyword">new</span> Callable&lt;JSONObject&gt;() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> JSONObject <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">            <span class="comment">//Do Something ....</span></div><div class="line">            <span class="keyword">return</span> messageJson;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样就完成了我们的五组异步调用.</p>
+<hr>
+<p>异步方面我暂且也学到这里,将来有机会继续更新有关异步的内容.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在我们对 Scala 的使用过程之中.我们会频繁的用到一类方法,称为&lt;em&gt;异步方法&lt;/em&gt;.&lt;br&gt;在 Scala 中也是我们最熟悉的 &lt;code&gt;scala.concurrent.Future&lt;/code&gt;.不了解相关内容的可以去看 &lt;code&gt;Future&lt;/cod
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Future" scheme="http://yoursite.com/tags/Future/"/>
+    
+      <category term="异步" scheme="http://yoursite.com/tags/%E5%BC%82%E6%AD%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>当 Java 遇到 Scala 中的 Seq 对象</title>
     <link href="http://yoursite.com/2017/04/25/%E5%BD%93-java-%E4%B8%AD%E9%81%87%E5%88%B0-scala-%E4%B8%AD%E7%9A%84-Seq-%E5%AF%B9%E8%B1%A1/"/>
     <id>http://yoursite.com/2017/04/25/当-java-中遇到-scala-中的-Seq-对象/</id>
     <published>2017-04-25T15:31:46.000Z</published>
-    <updated>2017-04-26T06:06:24.000Z</updated>
+    <updated>2017-04-26T15:44:21.000Z</updated>
     
     <content type="html"><![CDATA[<p>今天在工作中遇到了一个很有意思的情况.<br>我们都知道 java 和 scala 代码由于是基于同一套 jvm 环境上运行的语言.所以在代码中是可以互相调用的.所以今天在调用同事写的代码的时候遇到了一个很有趣的问题.<br><a id="more"></a><br>首先,他传给了我一个 scala 的 case class 对象:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderEvent</span>(<span class="params">products: <span class="type">Seq</span>[<span class="type">ProductInfo</span>]</span>)</span></div></pre></td></tr></table></figure></p>
 <p>这个订单对象里有对应的产品列表.<br>于是有意思的事情出现了.当我获取到了对应的产品列表之后:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">event.products()</div><div class="line"><span class="comment">//返回类型:scala.collection.Seq&lt;ProductInfo&gt;</span></div></pre></td></tr></table></figure></p>
@@ -37,12 +114,12 @@
     
     </summary>
     
-      <category term="java_scala" scheme="http://yoursite.com/categories/java-scala/"/>
+      <category term="Java_Scala" scheme="http://yoursite.com/categories/Java-Scala/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
-      <category term="scala" scheme="http://yoursite.com/tags/scala/"/>
+      <category term="Scala" scheme="http://yoursite.com/tags/Scala/"/>
     
       <category term="Seq" scheme="http://yoursite.com/tags/Seq/"/>
     
@@ -53,7 +130,7 @@
     <link href="http://yoursite.com/2017/04/25/%E8%B4%A7%E5%B8%81%E9%87%91%E9%A2%9D%E8%AE%A1%E7%AE%97/"/>
     <id>http://yoursite.com/2017/04/25/货币金额计算/</id>
     <published>2017-04-25T15:06:04.000Z</published>
-    <updated>2017-04-26T07:45:41.000Z</updated>
+    <updated>2017-04-26T15:44:30.000Z</updated>
     
     <content type="html"><![CDATA[<p>商业用途之中,我们经常出现对于数字的金额的处理.</p>
 <p>比如金额<em>一万三千元零两块四毛</em>,数字写作<code>13000.24</code>, 但是在显示的处理以及在会计的计算中,经常会使用会计写法<code>13,000.24</code>.所以有些时候我们需要将数字直接转换为此类表示形式<br><a id="more"></a><br>所以今天涉及到了<code>java.text.NumberFormat</code>类.<br>举个栗子:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BigDecimal money = <span class="keyword">new</span> BigDecimal(<span class="string">"1021380124.127"</span>);</div><div class="line">NumberFormat format = NumberFormat.getCurrencyInstance();</div><div class="line">System.out.println(format.format(money));   <span class="comment">//￥1,021,380,124.127</span></div></pre></td></tr></table></figure></p>
@@ -72,12 +149,12 @@
     
     </summary>
     
-      <category term="java" scheme="http://yoursite.com/categories/java/"/>
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
       <category term="金额" scheme="http://yoursite.com/tags/%E9%87%91%E9%A2%9D/"/>
-    
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="BigDecimal" scheme="http://yoursite.com/tags/BigDecimal/"/>
     
