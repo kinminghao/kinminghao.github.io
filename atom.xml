@@ -75,9 +75,9 @@
       <category term="java" scheme="http://yoursite.com/categories/java/"/>
     
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="金额" scheme="http://yoursite.com/tags/%E9%87%91%E9%A2%9D/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="BigDecimal" scheme="http://yoursite.com/tags/BigDecimal/"/>
     
