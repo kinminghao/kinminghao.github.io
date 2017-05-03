@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java,Future,异步,lambda," />
 
 
 
@@ -92,15 +92,17 @@
 
 
 
-<meta name="description" content="此广告位长年招租">
-<meta property="og:type" content="website">
-<meta property="og:title" content="既然来了就坐坐吧">
-<meta property="og:url" content="http://yoursite.com/tags/金额/index.html">
+<meta name="description" content="在上一节 Java异步调用 - 1中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
+<meta name="keywords" content="Java,Future,异步,lambda">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java异步调用 - 2">
+<meta property="og:url" content="http://yoursite.com/2017/05/03/Java异步调用 - 2/index.html">
 <meta property="og:site_name" content="既然来了就坐坐吧">
-<meta property="og:description" content="此广告位长年招租">
+<meta property="og:description" content="在上一节 Java异步调用 - 1中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
+<meta property="og:updated_time" content="2017-05-03T10:22:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="既然来了就坐坐吧">
-<meta name="twitter:description" content="此广告位长年招租">
+<meta name="twitter:title" content="Java异步调用 - 2">
+<meta name="twitter:description" content="在上一节 Java异步调用 - 1中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
 
 
 
@@ -128,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/金额/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/03/Java异步调用 - 2/"/>
 
 
 
 
 
-  <title>标签: 金额 | 既然来了就坐坐吧</title>
+  <title>Java异步调用 - 2 | 既然来了就坐坐吧</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -178,7 +180,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -272,46 +274,170 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        金额
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/03/Java异步调用 - 2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yellow_head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="既然来了就坐坐吧">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java异步调用 - 2
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-03T18:03:50+08:00">
+                2017-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>在上一节 <a href="http://keychain.site/2017/04/26/java%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8/" target="_blank" rel="external">Java异步调用 - 1</a>中 我们提到了在需要使用异步调用的情况下如何使用 <code>FutureTask</code> 工具进行异步调用,并且提示了相关代码</p>
+<p>在上面的例子中,我们使用了<code>Callable</code>接口来实现了异步工作.</p>
+<p>但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low.</p>
+<p>所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.<br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//先建立了一个拥有五个线程的线程池</span></div><div class="line">ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">5</span>);</div><div class="line"><span class="comment">//分别建立了对应的五个异步对象,并且传入 executor</span></div><div class="line">CompletableFuture&lt;JSONObject&gt; generalA = getGeneralFuture(receiver, MessageType.A,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalB = getGeneralFuture(receiver, MessageType.B,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalC = getGeneralFuture(receiver, MessageType.C,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalD = getGeneralFuture(receiver, MessageType.D,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalE = getGeneralFuture(receiver, MessageType.E,executorService);</div><div class="line"></div><div class="line"><span class="comment">//获取到五个对应的异步结果,时间取决于最慢的一个异步方法</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    response.put(<span class="string">"a_result"</span>, generalA.get());</div><div class="line">    response.put(<span class="string">"b_result"</span>, generalB.get());</div><div class="line">    response.put(<span class="string">"c_result"</span>, generalC.get());</div><div class="line">    response.put(<span class="string">"d_result"</span>, generalD.get());</div><div class="line">    response.put(<span class="string">"e_result"</span>, generalE.get());</div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">finally</span> &#123;</div><div class="line">    <span class="comment">//在所有结束情形下关闭线程池,回收资源</span></div><div class="line">    executorService.shutdown();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/04/25/货币金额计算/" itemprop="url">
-              
-                <span itemprop="name">货币金额计算</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-25T23:06:04+08:00"
-              content="2017-04-25" >
-          04-25
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Future/" rel="tag"># Future</a>
+          
+            <a href="/tags/异步/" rel="tag"># 异步</a>
+          
+            <a href="/tags/lambda/" rel="tag"># lambda</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/26/Java异步调用 - 1/" rel="prev" title="Java异步调用 - 1">
+                Java异步调用 - 1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -319,6 +445,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -544,6 +674,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
@@ -611,26 +745,6 @@
 
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
