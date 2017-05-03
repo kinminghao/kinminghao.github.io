@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java,Future,异步,lambda," />
+  <meta name="keywords" content="Java,Future,异步," />
 
 
 
@@ -92,17 +92,17 @@
 
 
 
-<meta name="description" content="在上一节 Java异步调用 - 1中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
-<meta name="keywords" content="Java,Future,异步,lambda">
+<meta name="description" content="在我们对 Scala 的使用过程之中.我们会频繁的用到一类方法,称为异步方法.在 Scala 中也是我们最熟悉的 scala.concurrent.Future.不了解相关内容的可以去看 Future 相关的博客. 通过对 Future 方法的调用,我们可以特别优雅的方式实现异步的调用.也就是类似多线程的使用.">
+<meta name="keywords" content="Java,Future,异步">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java异步调用 - 2">
-<meta property="og:url" content="http://yoursite.com/2017/05/03/Java异步调用 - 2/index.html">
+<meta property="og:title" content="Java异步调用-1">
+<meta property="og:url" content="http://yoursite.com/2017/04/26/Java异步调用-1/index.html">
 <meta property="og:site_name" content="既然来了就坐坐吧">
-<meta property="og:description" content="在上一节 Java异步调用 - 1中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
-<meta property="og:updated_time" content="2017-05-03T10:22:41.000Z">
+<meta property="og:description" content="在我们对 Scala 的使用过程之中.我们会频繁的用到一类方法,称为异步方法.在 Scala 中也是我们最熟悉的 scala.concurrent.Future.不了解相关内容的可以去看 Future 相关的博客. 通过对 Future 方法的调用,我们可以特别优雅的方式实现异步的调用.也就是类似多线程的使用.">
+<meta property="og:updated_time" content="2017-05-03T10:25:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java异步调用 - 2">
-<meta name="twitter:description" content="在上一节 Java异步调用 - 1中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
+<meta name="twitter:title" content="Java异步调用-1">
+<meta name="twitter:description" content="在我们对 Scala 的使用过程之中.我们会频繁的用到一类方法,称为异步方法.在 Scala 中也是我们最熟悉的 scala.concurrent.Future.不了解相关内容的可以去看 Future 相关的博客. 通过对 Future 方法的调用,我们可以特别优雅的方式实现异步的调用.也就是类似多线程的使用.">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/03/Java异步调用 - 2/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/26/Java异步调用-1/"/>
 
 
 
 
 
-  <title>Java异步调用 - 2 | 既然来了就坐坐吧</title>
+  <title>Java异步调用-1 | 既然来了就坐坐吧</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -284,7 +284,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/03/Java异步调用 - 2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/26/Java异步调用-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="kin">
@@ -305,7 +305,7 @@
             
             
               
-                Java异步调用 - 2
+                Java异步调用-1
               
             
           </h1>
@@ -320,8 +320,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-03T18:03:50+08:00">
-                2017-05-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T23:42:25+08:00">
+                2017-04-26
               </time>
             
 
@@ -330,6 +330,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -355,10 +377,56 @@
       
 
       
-        <p>在上一节 <a href="http://keychain.site/2017/04/26/java%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8/" target="_blank" rel="external">Java异步调用 - 1</a>中 我们提到了在需要使用异步调用的情况下如何使用 <code>FutureTask</code> 工具进行异步调用,并且提示了相关代码</p>
-<p>在上面的例子中,我们使用了<code>Callable</code>接口来实现了异步工作.</p>
-<p>但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low.</p>
-<p>所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.<br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//先建立了一个拥有五个线程的线程池</span></div><div class="line">ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">5</span>);</div><div class="line"><span class="comment">//分别建立了对应的五个异步对象,并且传入 executor</span></div><div class="line">CompletableFuture&lt;JSONObject&gt; generalA = getGeneralFuture(receiver, MessageType.A,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalB = getGeneralFuture(receiver, MessageType.B,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalC = getGeneralFuture(receiver, MessageType.C,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalD = getGeneralFuture(receiver, MessageType.D,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalE = getGeneralFuture(receiver, MessageType.E,executorService);</div><div class="line"></div><div class="line"><span class="comment">//获取到五个对应的异步结果,时间取决于最慢的一个异步方法</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    response.put(<span class="string">"a_result"</span>, generalA.get());</div><div class="line">    response.put(<span class="string">"b_result"</span>, generalB.get());</div><div class="line">    response.put(<span class="string">"c_result"</span>, generalC.get());</div><div class="line">    response.put(<span class="string">"d_result"</span>, generalD.get());</div><div class="line">    response.put(<span class="string">"e_result"</span>, generalE.get());</div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">finally</span> &#123;</div><div class="line">    <span class="comment">//在所有结束情形下关闭线程池,回收资源</span></div><div class="line">    executorService.shutdown();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <p>在我们对 Scala 的使用过程之中.我们会频繁的用到一类方法,称为<em>异步方法</em>.<br>在 Scala 中也是我们最熟悉的 <code>scala.concurrent.Future</code>.不了解相关内容的可以去看 <code>Future</code> 相关的博客.</p>
+<p>通过对 <code>Future</code> 方法的调用,我们可以特别优雅的方式实现异步的调用.也就是类似多线程的使用.<br><a id="more"></a><br>在 Java 中,代码大部分都是同步执行的.简单的来说,就是做一顿饭我先刷锅,再淘米.等米饭做熟了再去洗碗洗菜炒菜盛饭盛菜摆桌吃饭.</p>
+<p>有了异步方法,我们就可以做到先刷锅刷碗,在淘米做饭的空闲功夫去洗菜炒菜做饭.大大节省我们的程序的运行效率.</p>
+<p><code>FutureTask</code>是<code>Future</code>接口的一个实现类,它是从 Java 1.5 开始引入的.通过它能够控制它的执行方法的行为.其具体的内容是通过 <code>Callable</code>接口来实现的.</p>
+<blockquote>
+<p><code>FutureTask</code>有7个状态,其中数值从小到大:<br><code>NEW</code> <code>COMPLETING</code> <code>NORMAL</code> <code>EXCEPTIONAL</code> <code>CANCELLED</code> <code>INTERRUPTING</code> <code>INTERRUPTED</code><br>其中,状态有几个可能的流转方式:</p>
+<ol>
+<li>新建 -&gt; 完成中 -&gt; 普通</li>
+<li>新建 -&gt; 完成中 -&gt; 异常</li>
+<li>新建 -&gt; 取消</li>
+<li>新建 -&gt; 打断中 -&gt; 打断</li>
+</ol>
+<p><code>FutureTask</code> 有许多方法,包括:</p>
+<ul>
+<li><code>isCancelled</code> 方法 : 返回是否取消(当状态是后面三种情况时)</li>
+<li><code>isDone</code> 方法 : 返回是否处理(当状态不是新建时)</li>
+<li><code>cancel</code> 方法 : 试图取消方法(状态可能变成取消或者被打断)</li>
+<li><code>get</code> 方法 : 获取到方法的返回值,如果传入了时间并且超时的话会抛出异常</li>
+</ul>
+</blockquote>
+<p><code>FutureTask</code>的构造器传入一个 <code>Callable</code> 对象,它和 <code>Runnable</code> 的主要区别是:</p>
+<table>
+<thead>
+<tr>
+<th><code>Callable</code></th>
+<th><code>Runnable</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实现 <code>call</code> 方法</td>
+<td>实现 <code>run</code> 方法</td>
+</tr>
+<tr>
+<td>可获得返回结果</td>
+<td>不能直接获得结果</td>
+</tr>
+<tr>
+<td>可以抛出异常</td>
+<td>不能抛出异常</td>
+</tr>
+</tbody>
+</table>
+<p>接下来我们直接看代码实现;</p>
+<p>首先我有五个获取对应的信息的方法<code>getGeneral</code>.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//先建立了一个拥有五个线程的线程池</span></div><div class="line">ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">5</span>);</div><div class="line"><span class="comment">//分别建立了对应的五个异步对象</span></div><div class="line">FutureTask&lt;JSONObject&gt; generalA = getGeneral(receiver, MessageType.A);</div><div class="line">FutureTask&lt;JSONObject&gt; generalB = getGeneral(receiver, MessageType.B);</div><div class="line">FutureTask&lt;JSONObject&gt; generalC = getGeneral(receiver, MessageType.C);</div><div class="line">FutureTask&lt;JSONObject&gt; generalD = getGeneral(receiver, MessageType.D);</div><div class="line">FutureTask&lt;JSONObject&gt; generalE = getGeneral(receiver, MessageType.E);</div><div class="line"><span class="comment">//对五个异步对象进行执行</span></div><div class="line">executorService.execute(generalA);</div><div class="line">executorService.execute(generalB);</div><div class="line">executorService.execute(generalC);</div><div class="line">executorService.execute(generalD);</div><div class="line">executorService.execute(generalE);</div><div class="line"><span class="comment">//获取到五个对应的异步结果,时间取决于最慢的一个异步方法</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    response.put(<span class="string">"a_result"</span>, generalA.get());</div><div class="line">    response.put(<span class="string">"b_result"</span>, generalB.get());</div><div class="line">    response.put(<span class="string">"c_result"</span>, generalC.get());</div><div class="line">    response.put(<span class="string">"d_result"</span>, generalD.get());</div><div class="line">    response.put(<span class="string">"e_result"</span>, generalE.get());</div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">finally</span> &#123;</div><div class="line">    <span class="comment">//在所有结束情形下关闭线程池,回收资源</span></div><div class="line">    executorService.shutdown();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>下面是<code>getGeneral</code>的代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> FutureTask&lt;JSONObject&gt; <span class="title">getGeneral</span><span class="params">(String receiver, MessageType messageType)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> FutureTask&lt;JSONObject&gt;(<span class="keyword">new</span> Callable&lt;JSONObject&gt;() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> JSONObject <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">            <span class="comment">//Do Something ....</span></div><div class="line">            <span class="keyword">return</span> messageJson;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样就完成了我们的五组异步调用.</p>
+<hr>
+<p>异步方面我暂且也学到这里,将来有机会继续更新有关异步的内容.</p>
 
       
     </div>
@@ -394,8 +462,6 @@
           
             <a href="/tags/异步/" rel="tag"># 异步</a>
           
-            <a href="/tags/lambda/" rel="tag"># lambda</a>
-          
         </div>
       
 
@@ -407,14 +473,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/05/03/Java异步调用-2/" rel="next" title="Java异步调用-2">
+                <i class="fa fa-chevron-left"></i> Java异步调用-2
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/26/Java异步调用 - 1/" rel="prev" title="Java异步调用 - 1">
-                Java异步调用 - 1 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/25/当-java-中遇到-scala-中的-Seq-对象/" rel="prev" title="当 Java 遇到 Scala 中的 Seq 对象">
+                当 Java 遇到 Scala 中的 Seq 对象 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
