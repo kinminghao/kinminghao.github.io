@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java,Future,异步,lambda," />
+  <meta name="keywords" content="Java,Future,lambda,异步," />
 
 
 
@@ -92,17 +92,17 @@
 
 
 
-<meta name="description" content="在上一节 Java异步调用-1中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
-<meta name="keywords" content="Java,Future,异步,lambda">
+<meta name="description" content="在上一节 Java异步调用1 中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
+<meta name="keywords" content="Java,Future,lambda,异步">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java异步调用2">
 <meta property="og:url" content="http://yoursite.com/2017/05/03/Java异步调用2/index.html">
 <meta property="og:site_name" content="既然来了就坐坐吧">
-<meta property="og:description" content="在上一节 Java异步调用-1中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
-<meta property="og:updated_time" content="2017-05-03T14:24:09.000Z">
+<meta property="og:description" content="在上一节 Java异步调用1 中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
+<meta property="og:updated_time" content="2017-05-04T07:45:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java异步调用2">
-<meta name="twitter:description" content="在上一节 Java异步调用-1中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
+<meta name="twitter:description" content="在上一节 Java异步调用1 中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
 
 
 
@@ -377,7 +377,7 @@
       
 
       
-        <p>在上一节 <a href="http://keychain.site/2017/04/26/Java%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A81/" target="_blank" rel="external">Java异步调用-1</a>中 我们提到了在需要使用异步调用的情况下如何使用 <code>FutureTask</code> 工具进行异步调用,并且提示了相关代码</p>
+        <p>在上一节 <a href="/2017/04/26/Java异步调用1/" title="Java异步调用1">Java异步调用1</a> 中 我们提到了在需要使用异步调用的情况下如何使用 <code>FutureTask</code> 工具进行异步调用,并且提示了相关代码</p>
 <p>在上面的例子中,我们使用了<code>Callable</code>接口来实现了异步工作.</p>
 <p>但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low.</p>
 <p>所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.<br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//先建立了一个拥有五个线程的线程池</span></div><div class="line">ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">5</span>);</div><div class="line"><span class="comment">//分别建立了对应的五个异步对象,并且传入 executor</span></div><div class="line">CompletableFuture&lt;JSONObject&gt; generalA = getGeneralFuture(receiver, MessageType.A,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalB = getGeneralFuture(receiver, MessageType.B,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalC = getGeneralFuture(receiver, MessageType.C,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalD = getGeneralFuture(receiver, MessageType.D,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalE = getGeneralFuture(receiver, MessageType.E,executorService);</div><div class="line"></div><div class="line"><span class="comment">//获取到五个对应的异步结果,时间取决于最慢的一个异步方法</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    response.put(<span class="string">"a_result"</span>, generalA.get());</div><div class="line">    response.put(<span class="string">"b_result"</span>, generalB.get());</div><div class="line">    response.put(<span class="string">"c_result"</span>, generalC.get());</div><div class="line">    response.put(<span class="string">"d_result"</span>, generalD.get());</div><div class="line">    response.put(<span class="string">"e_result"</span>, generalE.get());</div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">finally</span> &#123;</div><div class="line">    <span class="comment">//在所有结束情形下关闭线程池,回收资源</span></div><div class="line">    executorService.shutdown();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -419,9 +419,9 @@
           
             <a href="/tags/Future/" rel="tag"># Future</a>
           
-            <a href="/tags/异步/" rel="tag"># 异步</a>
-          
             <a href="/tags/lambda/" rel="tag"># lambda</a>
+          
+            <a href="/tags/异步/" rel="tag"># 异步</a>
           
         </div>
       
@@ -433,6 +433,10 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/04/CompletableFuture解析/" rel="next" title="CompletableFuture解析">
+                <i class="fa fa-chevron-left"></i> CompletableFuture解析
+              </a>
             
           </div>
 
@@ -511,7 +515,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

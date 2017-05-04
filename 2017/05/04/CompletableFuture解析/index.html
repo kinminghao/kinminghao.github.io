@@ -1,28 +1,383 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>既然来了就坐坐吧</title>
+<!doctype html>
+
+
+
   
-  <link href="//atom.xml" rel="self"/>
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
-  <link href="http://yoursite.com/"/>
-  <updated>2017-05-04T14:47:33.000Z</updated>
-  <id>http://yoursite.com/</id>
   
-  <author>
-    <name>kin</name>
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
     
-  </author>
-  
-  <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>CompletableFuture解析</title>
-    <link href="http://yoursite.com/2017/05/04/CompletableFuture%E8%A7%A3%E6%9E%90/"/>
-    <id>http://yoursite.com/2017/05/04/CompletableFuture解析/</id>
-    <published>2017-05-04T06:52:56.000Z</published>
-    <updated>2017-05-04T14:47:33.000Z</updated>
     
-    <content type="html"><![CDATA[<p>这几天稍微花时间学习了一下 java 8 提供的处理异步调用的一个 future 类 <code>CompletableFuture</code>.</p>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,Future,lambda," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="既然来了就坐坐吧" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="这几天稍微花时间学习了一下 java 8 提供的处理异步调用的一个 future 类 CompletableFuture. 这是一个针对函数式的 future 对象.用来让我们更加优雅的使用异步调用. 简述CompletableFuture是Future接口的实现类.内部只有两个属性:result和stack两个值,分别表示对象所存储的内容以及对象现在的完成状况. 由于CompletableFut">
+<meta name="keywords" content="Java,Future,lambda">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CompletableFuture解析">
+<meta property="og:url" content="http://yoursite.com/2017/05/04/CompletableFuture解析/index.html">
+<meta property="og:site_name" content="既然来了就坐坐吧">
+<meta property="og:description" content="这几天稍微花时间学习了一下 java 8 提供的处理异步调用的一个 future 类 CompletableFuture. 这是一个针对函数式的 future 对象.用来让我们更加优雅的使用异步调用. 简述CompletableFuture是Future接口的实现类.内部只有两个属性:result和stack两个值,分别表示对象所存储的内容以及对象现在的完成状况. 由于CompletableFut">
+<meta property="og:updated_time" content="2017-05-04T14:47:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CompletableFuture解析">
+<meta name="twitter:description" content="这几天稍微花时间学习了一下 java 8 提供的处理异步调用的一个 future 类 CompletableFuture. 这是一个针对函数式的 future 对象.用来让我们更加优雅的使用异步调用. 简述CompletableFuture是Future接口的实现类.内部只有两个属性:result和stack两个值,分别表示对象所存储的内容以及对象现在的完成状况. 由于CompletableFut">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/04/CompletableFuture解析/"/>
+
+
+
+
+
+  <title>CompletableFuture解析 | 既然来了就坐坐吧</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-80781234-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3394035727d7c071d0781ff0d6331024";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">既然来了就坐坐吧</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/04/CompletableFuture解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yellow_head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="既然来了就坐坐吧">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CompletableFuture解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-04T14:52:56+08:00">
+                2017-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这几天稍微花时间学习了一下 java 8 提供的处理异步调用的一个 future 类 <code>CompletableFuture</code>.</p>
 <p>这是一个针对函数式的 future 对象.用来让我们更加优雅的使用异步调用.</p>
 <h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p><code>CompletableFuture</code>是<code>Future</code>接口的实现类.内部只有两个属性:<code>result</code>和<code>stack</code>两个值,分别表示对象所存储的内容以及对象现在的完成状况.</p>
 <p>由于<code>CompletableFuture</code>也是 future 对象的一部分,所以它也有 future 的相关特性.博主在这里认为它最终要的内容就是他的执行时间,就是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CompletableFuture 只在对象创建的时候才开始尝试执行</div></pre></td></tr></table></figure></p>
@@ -106,210 +461,421 @@
 <h2 id="completedFuture-方法-1"><a href="#completedFuture-方法-1" class="headerlink" title="completedFuture 方法"></a>completedFuture 方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">base22</span><span class="params">()</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * completedFuture 方法是能够直接将值放入 future 对象,常用于测试</div><div class="line">     * CompletableFuture可以嵌套</div><div class="line">     */</div><div class="line">    CompletableFuture future = CompletableFuture.completedFuture(<span class="number">1</span>);</div><div class="line">    CompletableFuture future1 = CompletableFuture.completedFuture(future);</div><div class="line">    CompletableFuture future2 = CompletableFuture.completedFuture(future1);</div><div class="line">    System.out.println(future2.get());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <hr>
 <p>这篇解析写到这里,下一次我会简单说明一下有关 java 8 中的几种 lambda</p>
-]]></content>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Future/" rel="tag"># Future</a>
+          
+            <a href="/tags/lambda/" rel="tag"># lambda</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/03/Java异步调用2/" rel="prev" title="Java异步调用2">
+                Java异步调用2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
     
-    <summary type="html">
-    
-      &lt;p&gt;这几天稍微花时间学习了一下 java 8 提供的处理异步调用的一个 future 类 &lt;code&gt;CompletableFuture&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;这是一个针对函数式的 future 对象.用来让我们更加优雅的使用异步调用.&lt;/p&gt;
-&lt;h1 id=&quot;简述&quot;&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-      <category term="Future" scheme="http://yoursite.com/tags/Future/"/>
-    
-      <category term="lambda" scheme="http://yoursite.com/tags/lambda/"/>
-    
-  </entry>
+  </div>
+
+
+        </div>
+        
+          
   
-  <entry>
-    <title>Java异步调用2</title>
-    <link href="http://yoursite.com/2017/05/03/Java%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A82/"/>
-    <id>http://yoursite.com/2017/05/03/Java异步调用2/</id>
-    <published>2017-05-03T10:29:32.000Z</published>
-    <updated>2017-05-04T07:45:24.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在上一节 <a href="/2017/04/26/Java异步调用1/" title="Java异步调用1">Java异步调用1</a> 中 我们提到了在需要使用异步调用的情况下如何使用 <code>FutureTask</code> 工具进行异步调用,并且提示了相关代码</p>
-<p>在上面的例子中,我们使用了<code>Callable</code>接口来实现了异步工作.</p>
-<p>但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low.</p>
-<p>所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.<br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//先建立了一个拥有五个线程的线程池</span></div><div class="line">ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">5</span>);</div><div class="line"><span class="comment">//分别建立了对应的五个异步对象,并且传入 executor</span></div><div class="line">CompletableFuture&lt;JSONObject&gt; generalA = getGeneralFuture(receiver, MessageType.A,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalB = getGeneralFuture(receiver, MessageType.B,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalC = getGeneralFuture(receiver, MessageType.C,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalD = getGeneralFuture(receiver, MessageType.D,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalE = getGeneralFuture(receiver, MessageType.E,executorService);</div><div class="line"></div><div class="line"><span class="comment">//获取到五个对应的异步结果,时间取决于最慢的一个异步方法</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    response.put(<span class="string">"a_result"</span>, generalA.get());</div><div class="line">    response.put(<span class="string">"b_result"</span>, generalB.get());</div><div class="line">    response.put(<span class="string">"c_result"</span>, generalC.get());</div><div class="line">    response.put(<span class="string">"d_result"</span>, generalD.get());</div><div class="line">    response.put(<span class="string">"e_result"</span>, generalE.get());</div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">finally</span> &#123;</div><div class="line">    <span class="comment">//在所有结束情形下关闭线程池,回收资源</span></div><div class="line">    executorService.shutdown();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>下面是<code>getGeneralFuture</code>的代码,</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//传入一个lambda函数来处理逻辑</span></div><div class="line"><span class="function"><span class="keyword">private</span> CompletableFuture&lt;JSONObject&gt; <span class="title">getGeneralFuture</span><span class="params">(String receiver , MessageType messageType,ExecutorService executorService)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> CompletableFuture.supplyAsync(() -&gt; &#123;</div><div class="line">        <span class="comment">//Do Something ....</span></div><div class="line">        <span class="keyword">return</span> messageJson;</div><div class="line">    &#125;,executorService);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在 java 8 下使用 lambda 执行异步调用就完成了.</p>
-<hr>
-<p>关于这个例子暂时到这里,之后我们会继续学习有关<code>CompletableFuture</code>的内容.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在上一节 &lt;a href=&quot;/2017/04/26/Java异步调用1/&quot; title=&quot;Java异步调用1&quot;&gt;Java异步调用1&lt;/a&gt; 中 我们提到了在需要使用异步调用的情况下如何使用 &lt;code&gt;FutureTask&lt;/code&gt; 工具进行异步调用,并且提示了相关代码&lt;/p&gt;
-&lt;p&gt;在上面的例子中,我们使用了&lt;code&gt;Callable&lt;/code&gt;接口来实现了异步工作.&lt;/p&gt;
-&lt;p&gt;但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low.&lt;/p&gt;
-&lt;p&gt;所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-      <category term="Future" scheme="http://yoursite.com/tags/Future/"/>
-    
-      <category term="lambda" scheme="http://yoursite.com/tags/lambda/"/>
-    
-      <category term="异步" scheme="http://yoursite.com/tags/%E5%BC%82%E6%AD%A5/"/>
-    
-  </entry>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/yellow_head.png"
+               alt="kin" />
+          <p class="site-author-name" itemprop="name">kin</p>
+           
+              <p class="site-description motion-element" itemprop="description">此广告位长年招租</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kinminghao" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简述"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建对象"><span class="nav-number">1.1.</span> <span class="nav-text">创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取对象内容"><span class="nav-number">1.2.</span> <span class="nav-text">获取对象内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完成对象"><span class="nav-number">1.3.</span> <span class="nav-text">完成对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检验方法"><span class="nav-number">1.4.</span> <span class="nav-text">检验方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#then-方法"><span class="nav-number">1.5.</span> <span class="nav-text">then 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理多个CompletableFuture"><span class="nav-number">1.6.</span> <span class="nav-text">处理多个CompletableFuture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#allOf方法"><span class="nav-number">1.6.1.</span> <span class="nav-text">allOf方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#anyOf方法"><span class="nav-number">1.6.2.</span> <span class="nav-text">anyOf方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#completedFuture-方法"><span class="nav-number">1.7.</span> <span class="nav-text">completedFuture 方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#栗子"><span class="nav-number">2.</span> <span class="nav-text">栗子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建对象-1"><span class="nav-number">2.1.</span> <span class="nav-text">创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取对象内容-1"><span class="nav-number">2.2.</span> <span class="nav-text">获取对象内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完成对象-1"><span class="nav-number">2.3.</span> <span class="nav-text">完成对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检验方法-1"><span class="nav-number">2.4.</span> <span class="nav-text">检验方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#then-方法-1"><span class="nav-number">2.5.</span> <span class="nav-text">then 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理多个CompletableFuture-1"><span class="nav-number">2.6.</span> <span class="nav-text">处理多个CompletableFuture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#allOf方法-1"><span class="nav-number">2.6.1.</span> <span class="nav-text">allOf方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#anyOf方法-1"><span class="nav-number">2.6.2.</span> <span class="nav-text">anyOf方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#completedFuture-方法-1"><span class="nav-number">2.7.</span> <span class="nav-text">completedFuture 方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-  <entry>
-    <title>Java异步调用1</title>
-    <link href="http://yoursite.com/2017/04/26/Java%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A81/"/>
-    <id>http://yoursite.com/2017/04/26/Java异步调用1/</id>
-    <published>2017-04-26T15:42:25.000Z</published>
-    <updated>2017-05-03T13:24:59.000Z</updated>
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
     
-    <content type="html"><![CDATA[<p>在我们对 Scala 的使用过程之中.我们会频繁的用到一类方法,称为<em>异步方法</em>.<br>在 Scala 中也是我们最熟悉的 <code>scala.concurrent.Future</code>.不了解相关内容的可以去看 <code>Future</code> 相关的博客.</p>
-<p>通过对 <code>Future</code> 方法的调用,我们可以特别优雅的方式实现异步的调用.也就是类似多线程的使用.<br><a id="more"></a><br>在 Java 中,代码大部分都是同步执行的.简单的来说,就是做一顿饭我先刷锅,再淘米.等米饭做熟了再去洗碗洗菜炒菜盛饭盛菜摆桌吃饭.</p>
-<p>有了异步方法,我们就可以做到先刷锅刷碗,在淘米做饭的空闲功夫去洗菜炒菜做饭.大大节省我们的程序的运行效率.</p>
-<p><code>FutureTask</code>是<code>Future</code>接口的一个实现类,它是从 Java 1.5 开始引入的.通过它能够控制它的执行方法的行为.其具体的内容是通过 <code>Callable</code>接口来实现的.</p>
-<blockquote>
-<p><code>FutureTask</code>有7个状态,其中数值从小到大:<br><code>NEW</code> <code>COMPLETING</code> <code>NORMAL</code> <code>EXCEPTIONAL</code> <code>CANCELLED</code> <code>INTERRUPTING</code> <code>INTERRUPTED</code><br>其中,状态有几个可能的流转方式:</p>
-<ol>
-<li>新建 -&gt; 完成中 -&gt; 普通</li>
-<li>新建 -&gt; 完成中 -&gt; 异常</li>
-<li>新建 -&gt; 取消</li>
-<li>新建 -&gt; 打断中 -&gt; 打断</li>
-</ol>
-<p><code>FutureTask</code> 有许多方法,包括:</p>
-<ul>
-<li><code>isCancelled</code> 方法 : 返回是否取消(当状态是后面三种情况时)</li>
-<li><code>isDone</code> 方法 : 返回是否处理(当状态不是新建时)</li>
-<li><code>cancel</code> 方法 : 试图取消方法(状态可能变成取消或者被打断)</li>
-<li><code>get</code> 方法 : 获取到方法的返回值,如果传入了时间并且超时的话会抛出异常</li>
-</ul>
-</blockquote>
-<p><code>FutureTask</code>的构造器传入一个 <code>Callable</code> 对象,它和 <code>Runnable</code> 的主要区别是:</p>
-<table>
-<thead>
-<tr>
-<th><code>Callable</code></th>
-<th><code>Runnable</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>实现 <code>call</code> 方法</td>
-<td>实现 <code>run</code> 方法</td>
-</tr>
-<tr>
-<td>可获得返回结果</td>
-<td>不能直接获得结果</td>
-</tr>
-<tr>
-<td>可以抛出异常</td>
-<td>不能抛出异常</td>
-</tr>
-</tbody>
-</table>
-<p>接下来我们直接看代码实现;</p>
-<p>首先我有五个获取对应的信息的方法<code>getGeneral</code>.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//先建立了一个拥有五个线程的线程池</span></div><div class="line">ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">5</span>);</div><div class="line"><span class="comment">//分别建立了对应的五个异步对象</span></div><div class="line">FutureTask&lt;JSONObject&gt; generalA = getGeneral(receiver, MessageType.A);</div><div class="line">FutureTask&lt;JSONObject&gt; generalB = getGeneral(receiver, MessageType.B);</div><div class="line">FutureTask&lt;JSONObject&gt; generalC = getGeneral(receiver, MessageType.C);</div><div class="line">FutureTask&lt;JSONObject&gt; generalD = getGeneral(receiver, MessageType.D);</div><div class="line">FutureTask&lt;JSONObject&gt; generalE = getGeneral(receiver, MessageType.E);</div><div class="line"><span class="comment">//对五个异步对象进行执行</span></div><div class="line">executorService.execute(generalA);</div><div class="line">executorService.execute(generalB);</div><div class="line">executorService.execute(generalC);</div><div class="line">executorService.execute(generalD);</div><div class="line">executorService.execute(generalE);</div><div class="line"><span class="comment">//获取到五个对应的异步结果,时间取决于最慢的一个异步方法</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    response.put(<span class="string">"a_result"</span>, generalA.get());</div><div class="line">    response.put(<span class="string">"b_result"</span>, generalB.get());</div><div class="line">    response.put(<span class="string">"c_result"</span>, generalC.get());</div><div class="line">    response.put(<span class="string">"d_result"</span>, generalD.get());</div><div class="line">    response.put(<span class="string">"e_result"</span>, generalE.get());</div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">finally</span> &#123;</div><div class="line">    <span class="comment">//在所有结束情形下关闭线程池,回收资源</span></div><div class="line">    executorService.shutdown();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>下面是<code>getGeneral</code>的代码:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> FutureTask&lt;JSONObject&gt; <span class="title">getGeneral</span><span class="params">(String receiver, MessageType messageType)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> FutureTask&lt;JSONObject&gt;(<span class="keyword">new</span> Callable&lt;JSONObject&gt;() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> JSONObject <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">            <span class="comment">//Do Something ....</span></div><div class="line">            <span class="keyword">return</span> messageJson;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样就完成了我们的五组异步调用.</p>
-<hr>
-<p>异步方面我暂且也学到这里,将来有机会继续更新有关异步的内容.</p>
-]]></content>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
-    <summary type="html">
-    
-      &lt;p&gt;在我们对 Scala 的使用过程之中.我们会频繁的用到一类方法,称为&lt;em&gt;异步方法&lt;/em&gt;.&lt;br&gt;在 Scala 中也是我们最熟悉的 &lt;code&gt;scala.concurrent.Future&lt;/code&gt;.不了解相关内容的可以去看 &lt;code&gt;Future&lt;/code&gt; 相关的博客.&lt;/p&gt;
-&lt;p&gt;通过对 &lt;code&gt;Future&lt;/code&gt; 方法的调用,我们可以特别优雅的方式实现异步的调用.也就是类似多线程的使用.&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-      <category term="Future" scheme="http://yoursite.com/tags/Future/"/>
-    
-      <category term="异步" scheme="http://yoursite.com/tags/%E5%BC%82%E6%AD%A5/"/>
-    
-  </entry>
+
+  </div>
+
   
-  <entry>
-    <title>当 Java 遇到 Scala 中的 Seq 对象</title>
-    <link href="http://yoursite.com/2017/04/25/%E5%BD%93-java-%E4%B8%AD%E9%81%87%E5%88%B0-scala-%E4%B8%AD%E7%9A%84-Seq-%E5%AF%B9%E8%B1%A1/"/>
-    <id>http://yoursite.com/2017/04/25/当-java-中遇到-scala-中的-Seq-对象/</id>
-    <published>2017-04-25T15:31:46.000Z</published>
-    <updated>2017-04-27T03:59:18.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>今天在工作中遇到了一个很有意思的情况.<br>我们都知道 java 和 scala 代码由于是基于同一套 jvm 环境上运行的语言.所以在代码中是可以互相调用的.所以今天在调用同事写的代码的时候遇到了一个很有趣的问题.<br><a id="more"></a><br>首先,他传给了我一个 scala 的 case class 对象:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderEvent</span>(<span class="params">products: <span class="type">Seq</span>[<span class="type">ProductInfo</span>]</span>)</span></div></pre></td></tr></table></figure></p>
-<p>这个订单对象里有对应的产品列表.<br>于是有意思的事情出现了.当我获取到了对应的产品列表之后:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">event.products()</div><div class="line"><span class="comment">//返回类型:scala.collection.Seq&lt;ProductInfo&gt;</span></div></pre></td></tr></table></figure></p>
-<p>这个时候我在获得到的对象中获取对应的方法能够获取非常多的方法.包括<code>Seq</code> 中非常常见的 <code>map</code>,<code>flatMap</code>,<code>forEach</code>,<code>filter</code>等方法.但是,事实证明,这不太好用.虽然 java8 中已经支持了函数式编程.但是显然还不能够支持 scala 中的集合方法.</p>
-<p>所以我又把目标转到了转换类型方法中去.<br>于是我又发现了<code>toList</code>方法,但是很遗憾的是.我获得到了 scala 中的 <code>List</code>, 仍然不能正常的使用.从 java 中找到 scala 中的 <code>as[]</code> 方法以及<code>toJava</code> 方法显然也有些异想天开.</p>
-<p>最后我只能从方法中找到了一个<code>iterator</code>方法,他可以获得一个<code>Iterator</code>对象.当然…这个对象也是 scala 中的.不过它同时具有的 <code>hasNext</code> 方法以及 <code>next</code> 方法为我提供了一个while循环的可能性.</p>
-<hr>
-<p>这个问题目前没有结束,日后我会继续对这个问题进行研究.期待下一篇能够解决此问题</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;今天在工作中遇到了一个很有意思的情况.&lt;br&gt;我们都知道 java 和 scala 代码由于是基于同一套 jvm 环境上运行的语言.所以在代码中是可以互相调用的.所以今天在调用同事写的代码的时候遇到了一个很有趣的问题.&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Java_Scala" scheme="http://yoursite.com/categories/Java-Scala/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-      <category term="Scala" scheme="http://yoursite.com/tags/Scala/"/>
-    
-      <category term="Seq" scheme="http://yoursite.com/tags/Seq/"/>
-    
-  </entry>
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
   
-  <entry>
-    <title>货币金额计算</title>
-    <link href="http://yoursite.com/2017/04/25/%E8%B4%A7%E5%B8%81%E9%87%91%E9%A2%9D%E8%AE%A1%E7%AE%97/"/>
-    <id>http://yoursite.com/2017/04/25/货币金额计算/</id>
-    <published>2017-04-25T15:06:04.000Z</published>
-    <updated>2017-04-27T03:59:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>商业用途之中,我们经常出现对于数字的金额的处理.</p>
-<p>比如金额<em>一万三千元零两块四毛</em>,数字写作<code>13000.24</code>, 但是在显示的处理以及在会计的计算中,经常会使用会计写法<code>13,000.24</code>.所以有些时候我们需要将数字直接转换为此类表示形式<br><a id="more"></a><br>所以今天涉及到了<code>java.text.NumberFormat</code>类.<br>举个栗子:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BigDecimal money = <span class="keyword">new</span> BigDecimal(<span class="string">"1021380124.127"</span>);</div><div class="line">NumberFormat format = NumberFormat.getCurrencyInstance();</div><div class="line">System.out.println(format.format(money));   <span class="comment">//￥1,021,380,124.127</span></div></pre></td></tr></table></figure></p>
-<p>针对<code>getCurrencyInstance</code>方法, format 方法能够将传入的数字转换成金额格式,并且转换成金额的显示方式并在前面加上人民币标识符.</p>
-<p>当然我们还有最常规的模式:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BigDecimal money = <span class="keyword">new</span> BigDecimal(<span class="string">"1021380124.127"</span>);</div><div class="line">NumberFormat format = NumberFormat.getNumberInstance();</div><div class="line">System.out.println(format.format(money));   <span class="comment">//1,021,380,124.127</span></div></pre></td></tr></table></figure></p>
-<p><code>getNumberInstance</code>方法会对数字进行正常的格式划分;<br>而<code>getIntegerInstance</code>方法会对数字进行整数的四舍五入:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BigDecimal money = <span class="keyword">new</span> BigDecimal(<span class="string">"1021380124.127"</span>);</div><div class="line">NumberFormat format = NumberFormat.getIntegerInstance();</div><div class="line">System.out.println(format.format(money));   <span class="comment">//1,021,380,124</span></div></pre></td></tr></table></figure></p>
-<p>除了这些<code>format</code> 方法允许传入多种类型的参数,比如整形, double,long, 以及一些 object 类型.比如 BigDecimal.<br>但是无法处理字符串类型,如果传入字符串类型就会抛出异常<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.IllegalArgumentException: Cannot format given Object as a Number</div></pre></td></tr></table></figure></p>
-<hr>
-<p>针对此方法之后还会进一步的学习,届时将会进一步更新此目录</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;商业用途之中,我们经常出现对于数字的金额的处理.&lt;/p&gt;
-&lt;p&gt;比如金额&lt;em&gt;一万三千元零两块四毛&lt;/em&gt;,数字写作&lt;code&gt;13000.24&lt;/code&gt;, 但是在显示的处理以及在会计的计算中,经常会使用会计写法&lt;code&gt;13,000.24&lt;/code&gt;.所以有些时候我们需要将数字直接转换为此类表示形式&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-      <category term="金额" scheme="http://yoursite.com/tags/%E9%87%91%E9%A2%9D/"/>
-    
-      <category term="BigDecimal" scheme="http://yoursite.com/tags/BigDecimal/"/>
-    
-  </entry>
+
+
   
-</feed>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
