@@ -5,7 +5,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-04T14:47:33.000Z</updated>
+  <updated>2017-05-04T14:50:15.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,12 +20,13 @@
     <link href="http://yoursite.com/2017/05/04/CompletableFuture%E8%A7%A3%E6%9E%90/"/>
     <id>http://yoursite.com/2017/05/04/CompletableFuture解析/</id>
     <published>2017-05-04T06:52:56.000Z</published>
-    <updated>2017-05-04T14:47:33.000Z</updated>
+    <updated>2017-05-04T14:50:15.000Z</updated>
     
     <content type="html"><![CDATA[<p>这几天稍微花时间学习了一下 java 8 提供的处理异步调用的一个 future 类 <code>CompletableFuture</code>.</p>
 <p>这是一个针对函数式的 future 对象.用来让我们更加优雅的使用异步调用.</p>
 <h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p><code>CompletableFuture</code>是<code>Future</code>接口的实现类.内部只有两个属性:<code>result</code>和<code>stack</code>两个值,分别表示对象所存储的内容以及对象现在的完成状况.</p>
 <p>由于<code>CompletableFuture</code>也是 future 对象的一部分,所以它也有 future 的相关特性.博主在这里认为它最终要的内容就是他的执行时间,就是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CompletableFuture 只在对象创建的时候才开始尝试执行</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p><code>CompletableFuture</code>有两类最基本的创建对象的静态方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;U&gt; <span class="function">CompletableFuture&lt;U&gt; <span class="title">supplyAsync</span><span class="params">(Supplier&lt;U&gt; supplier)</span></span>;</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;U&gt; <span class="function">CompletableFuture&lt;U&gt; <span class="title">supplyAsync</span><span class="params">(Supplier&lt;U&gt; supplier, Executor executor)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CompletableFuture&lt;Void&gt; <span class="title">runAsync</span><span class="params">(Runnable runnable)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CompletableFuture&lt;Void&gt; <span class="title">runAsync</span><span class="params">(Runnable runnable, Executor executor)</span></span>;</div></pre></td></tr></table></figure></p>
 <blockquote>
 <ul>
@@ -112,7 +113,8 @@
     
       &lt;p&gt;这几天稍微花时间学习了一下 java 8 提供的处理异步调用的一个 future 类 &lt;code&gt;CompletableFuture&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;这是一个针对函数式的 future 对象.用来让我们更加优雅的使用异步调用.&lt;/p&gt;
-&lt;h1 id=&quot;简述&quot;&gt;
+&lt;h1 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot; title=&quot;简述&quot;&gt;&lt;/a&gt;简述&lt;/h1&gt;&lt;p&gt;&lt;code&gt;CompletableFuture&lt;/code&gt;是&lt;code&gt;Future&lt;/code&gt;接口的实现类.内部只有两个属性:&lt;code&gt;result&lt;/code&gt;和&lt;code&gt;stack&lt;/code&gt;两个值,分别表示对象所存储的内容以及对象现在的完成状况.&lt;/p&gt;
+&lt;p&gt;由于&lt;code&gt;CompletableFuture&lt;/code&gt;也是 future 对象的一部分,所以它也有 future 的相关特性.博主在这里认为它最终要的内容就是他的执行时间,就是:&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;CompletableFuture 只在对象创建的时候才开始尝试执行&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
     
     </summary>
     

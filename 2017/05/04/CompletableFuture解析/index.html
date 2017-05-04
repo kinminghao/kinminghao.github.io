@@ -99,7 +99,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/04/CompletableFuture解析/index.html">
 <meta property="og:site_name" content="既然来了就坐坐吧">
 <meta property="og:description" content="这几天稍微花时间学习了一下 java 8 提供的处理异步调用的一个 future 类 CompletableFuture. 这是一个针对函数式的 future 对象.用来让我们更加优雅的使用异步调用. 简述CompletableFuture是Future接口的实现类.内部只有两个属性:result和stack两个值,分别表示对象所存储的内容以及对象现在的完成状况. 由于CompletableFut">
-<meta property="og:updated_time" content="2017-05-04T14:47:33.000Z">
+<meta property="og:updated_time" content="2017-05-04T14:50:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CompletableFuture解析">
 <meta name="twitter:description" content="这几天稍微花时间学习了一下 java 8 提供的处理异步调用的一个 future 类 CompletableFuture. 这是一个针对函数式的 future 对象.用来让我们更加优雅的使用异步调用. 简述CompletableFuture是Future接口的实现类.内部只有两个属性:result和stack两个值,分别表示对象所存储的内容以及对象现在的完成状况. 由于CompletableFut">
@@ -381,6 +381,7 @@
 <p>这是一个针对函数式的 future 对象.用来让我们更加优雅的使用异步调用.</p>
 <h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p><code>CompletableFuture</code>是<code>Future</code>接口的实现类.内部只有两个属性:<code>result</code>和<code>stack</code>两个值,分别表示对象所存储的内容以及对象现在的完成状况.</p>
 <p>由于<code>CompletableFuture</code>也是 future 对象的一部分,所以它也有 future 的相关特性.博主在这里认为它最终要的内容就是他的执行时间,就是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CompletableFuture 只在对象创建的时候才开始尝试执行</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p><code>CompletableFuture</code>有两类最基本的创建对象的静态方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;U&gt; <span class="function">CompletableFuture&lt;U&gt; <span class="title">supplyAsync</span><span class="params">(Supplier&lt;U&gt; supplier)</span></span>;</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;U&gt; <span class="function">CompletableFuture&lt;U&gt; <span class="title">supplyAsync</span><span class="params">(Supplier&lt;U&gt; supplier, Executor executor)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CompletableFuture&lt;Void&gt; <span class="title">runAsync</span><span class="params">(Runnable runnable)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CompletableFuture&lt;Void&gt; <span class="title">runAsync</span><span class="params">(Runnable runnable, Executor executor)</span></span>;</div></pre></td></tr></table></figure></p>
 <blockquote>
 <ul>
