@@ -5,7 +5,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-05T13:11:05.000Z</updated>
+  <updated>2017-05-05T15:26:47.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,55 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java lambda 简述</title>
+    <link href="http://yoursite.com/2017/05/05/Java-lambda-%E7%AE%80%E8%BF%B0/"/>
+    <id>http://yoursite.com/2017/05/05/Java-lambda-简述/</id>
+    <published>2017-05-05T14:16:35.000Z</published>
+    <updated>2017-05-05T15:26:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>Java 8 提供了 lambda 表达式.用来实现函数式编程.</p>
+<p>可能会有类似的形式:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//返回一个对象</span></div><div class="line">() -&gt; &#123;<span class="keyword">return</span> <span class="keyword">new</span> Random().nextInt();&#125;</div><div class="line"><span class="comment">//消费一个对象</span></div><div class="line">x -&gt; &#123; System.out.println(x);&#125;</div><div class="line"><span class="comment">//把一个对象变成另一个</span></div><div class="line">x -&gt; &#123;<span class="keyword">return</span> x * <span class="number">100</span>;&#125;</div><div class="line"><span class="comment">//处理两个对象</span></div><div class="line">(x,y) -&gt; ( <span class="keyword">return</span> x*y;)</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>可以引用外部对象,但是它必须是既成事实的 final 变量.<br>表示这个变量可以不是 final 的但是只能赋一次值.</p>
+<p>在 java 中,对于只有一个抽象方法的接口.叫做<strong>函数接口</strong>,可以有更多方法,但是只能是默认方法和具体方法.</p>
+<p>所以 java 8 中提供了一个标签<code>@FunctionalInterface</code>用于保证接口是函数接口</p>
+<h2 id="java-8-中提供了几大函数式接口"><a href="#java-8-中提供了几大函数式接口" class="headerlink" title="java 8 中提供了几大函数式接口:"></a>java 8 中提供了几大函数式接口:</h2><h3 id="Predicate"><a href="#Predicate" class="headerlink" title="Predicate"></a>Predicate</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Predicate</span>&lt;<span class="title">T</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>该函数表示一个对象到布尔值类型的转变<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">x -&gt; &#123;<span class="keyword">return</span> <span class="keyword">true</span>;&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Consumer</span>&lt;<span class="title">T</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>该函数表示对一个对象的使用,并且不返回值<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">x -&gt; &#123;System.out.println(x);&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Function</span>&lt;<span class="title">T</span>, <span class="title">R</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>该函数表示对一个对象转变为另一个对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">x -&gt; &#123; <span class="keyword">return</span> (AnotherType)x;&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Supplier"><a href="#Supplier" class="headerlink" title="Supplier"></a>Supplier</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Supplier</span>&lt;<span class="title">T</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>该函数生成一个类型的对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">() -&gt; &#123;<span class="keyword">return</span> (T)<span class="keyword">new</span> Instance();&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="BiPredicate"><a href="#BiPredicate" class="headerlink" title="BiPredicate"></a>BiPredicate</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BiPredicate</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>该函数表示两个对象到布尔值的转变<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(x,y) -&gt; &#123;<span class="keyword">return</span> x &gt; y;&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="BiConsumer"><a href="#BiConsumer" class="headerlink" title="BiConsumer"></a>BiConsumer</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BiConsumer</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>该函数表示消费两个对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(x,y) -&gt; &#123; System.out.println(x+y);&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="BiFunction"><a href="#BiFunction" class="headerlink" title="BiFunction"></a>BiFunction</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BiFunction</span>&lt;<span class="title">T</span>, <span class="title">U</span>, <span class="title">R</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>该函数消费两个对象 T 和 U 生成一个类型为 R 的对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(T t, U u) -&gt; &#123;<span class="keyword">return</span> (R) r;&#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<p>在很多的方法中会要求参数中返回如上的一些接口实例,当我们需要传入对应的接口对象的时候,我们可以用函数 lambda 来代替对接口的实现类.<br>通常代码中会通过接口类型来提示我们需要使用的函数类型.我们可以根据如上给出的例子来实现接口.<br>实例可参考之前的文章: <a href="/2017/05/04/CompletableFuture解析/" title="CompletableFuture解析">CompletableFuture解析</a></p>
+<hr>
+<p>本篇只是一个简单的介绍,如果有机会后面会继续介绍相关的内容.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot; title=&quot;简述&quot;&gt;&lt;/a&gt;简述&lt;/h2&gt;&lt;p&gt;Java 8 提供了 lambda 表达式.用来实现函数式编程.&lt;/p&gt;
+&lt;p&gt;可能会有类似的形式:&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//返回一个对象&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;() -&amp;gt; &amp;#123;&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Random().nextInt();&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//消费一个对象&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;x -&amp;gt; &amp;#123; System.out.println(x);&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//把一个对象变成另一个&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;x -&amp;gt; &amp;#123;&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; x * &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//处理两个对象&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;(x,y) -&amp;gt; ( &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; x*y;)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="lambda" scheme="http://yoursite.com/tags/lambda/"/>
+    
+  </entry>
   
   <entry>
     <title>CompletableFuture解析</title>
@@ -163,9 +212,9 @@
     
       <category term="Future" scheme="http://yoursite.com/tags/Future/"/>
     
-      <category term="lambda" scheme="http://yoursite.com/tags/lambda/"/>
-    
       <category term="异步" scheme="http://yoursite.com/tags/%E5%BC%82%E6%AD%A5/"/>
+    
+      <category term="lambda" scheme="http://yoursite.com/tags/lambda/"/>
     
   </entry>
   
