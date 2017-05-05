@@ -5,7 +5,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-05T13:06:30.000Z</updated>
+  <updated>2017-05-05T13:11:05.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/05/04/CompletableFuture%E8%A7%A3%E6%9E%90/"/>
     <id>http://yoursite.com/2017/05/04/CompletableFuture解析/</id>
     <published>2017-05-04T06:52:56.000Z</published>
-    <updated>2017-05-05T13:06:30.000Z</updated>
+    <updated>2017-05-05T13:11:05.000Z</updated>
     
     <content type="html"><![CDATA[<p>这几天稍微花时间学习了一下 java 8 提供的处理异步调用的一个 future 类 <code>CompletableFuture</code>.</p>
 <p>这是一个针对函数式的 future 对象.用来让我们更加优雅的使用异步调用.</p>
@@ -118,6 +118,8 @@
     
     </summary>
     
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
     
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
@@ -132,7 +134,7 @@
     <link href="http://yoursite.com/2017/05/03/Java%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A82/"/>
     <id>http://yoursite.com/2017/05/03/Java异步调用2/</id>
     <published>2017-05-03T10:29:32.000Z</published>
-    <updated>2017-05-05T13:06:38.000Z</updated>
+    <updated>2017-05-05T13:11:11.000Z</updated>
     
     <content type="html"><![CDATA[<p>在上一节 <a href="/2017/04/26/Java异步调用1/" title="Java异步调用1">Java异步调用1</a> 中 我们提到了在需要使用异步调用的情况下如何使用 <code>FutureTask</code> 工具进行异步调用,并且提示了相关代码</p>
 <p>在上面的例子中,我们使用了<code>Callable</code>接口来实现了异步工作.</p>
@@ -154,14 +156,16 @@
     
     </summary>
     
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
     
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
       <category term="Future" scheme="http://yoursite.com/tags/Future/"/>
     
-      <category term="异步" scheme="http://yoursite.com/tags/%E5%BC%82%E6%AD%A5/"/>
-    
       <category term="lambda" scheme="http://yoursite.com/tags/lambda/"/>
+    
+      <category term="异步" scheme="http://yoursite.com/tags/%E5%BC%82%E6%AD%A5/"/>
     
   </entry>
   
@@ -170,7 +174,7 @@
     <link href="http://yoursite.com/2017/04/26/Java%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A81/"/>
     <id>http://yoursite.com/2017/04/26/Java异步调用1/</id>
     <published>2017-04-26T15:42:25.000Z</published>
-    <updated>2017-05-05T13:06:34.000Z</updated>
+    <updated>2017-05-05T13:11:08.000Z</updated>
     
     <content type="html"><![CDATA[<p>在我们对 Scala 的使用过程之中.我们会频繁的用到一类方法,称为<em>异步方法</em>.<br>在 Scala 中也是我们最熟悉的 <code>scala.concurrent.Future</code>.不了解相关内容的可以去看 <code>Future</code> 相关的博客.</p>
 <p>通过对 <code>Future</code> 方法的调用,我们可以特别优雅的方式实现异步的调用.也就是类似多线程的使用.<br><a id="more"></a><br>在 Java 中,代码大部分都是同步执行的.简单的来说,就是做一顿饭我先刷锅,再淘米.等米饭做熟了再去洗碗洗菜炒菜盛饭盛菜摆桌吃饭.</p>
@@ -231,6 +235,8 @@
     
     </summary>
     
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
     
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
@@ -245,7 +251,7 @@
     <link href="http://yoursite.com/2017/04/25/%E5%BD%93-java-%E4%B8%AD%E9%81%87%E5%88%B0-scala-%E4%B8%AD%E7%9A%84-Seq-%E5%AF%B9%E8%B1%A1/"/>
     <id>http://yoursite.com/2017/04/25/当-java-中遇到-scala-中的-Seq-对象/</id>
     <published>2017-04-25T15:31:46.000Z</published>
-    <updated>2017-05-05T13:06:26.000Z</updated>
+    <updated>2017-05-05T13:10:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>今天在工作中遇到了一个很有意思的情况.<br>我们都知道 java 和 scala 代码由于是基于同一套 jvm 环境上运行的语言.所以在代码中是可以互相调用的.所以今天在调用同事写的代码的时候遇到了一个很有趣的问题.<br><a id="more"></a><br>首先,他传给了我一个 scala 的 case class 对象:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderEvent</span>(<span class="params">products: <span class="type">Seq</span>[<span class="type">ProductInfo</span>]</span>)</span></div></pre></td></tr></table></figure></p>
 <p>这个订单对象里有对应的产品列表.<br>于是有意思的事情出现了.当我获取到了对应的产品列表之后:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">event.products()</div><div class="line"><span class="comment">//返回类型:scala.collection.Seq&lt;ProductInfo&gt;</span></div></pre></td></tr></table></figure></p>
@@ -262,6 +268,8 @@
     
     </summary>
     
+      <category term="Java_Scala" scheme="http://yoursite.com/categories/Java-Scala/"/>
+    
     
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
@@ -276,7 +284,7 @@
     <link href="http://yoursite.com/2017/04/25/%E8%B4%A7%E5%B8%81%E9%87%91%E9%A2%9D%E8%AE%A1%E7%AE%97/"/>
     <id>http://yoursite.com/2017/04/25/货币金额计算/</id>
     <published>2017-04-25T15:06:04.000Z</published>
-    <updated>2017-05-05T13:06:28.000Z</updated>
+    <updated>2017-05-05T13:11:02.000Z</updated>
     
     <content type="html"><![CDATA[<p>商业用途之中,我们经常出现对于数字的金额的处理.</p>
 <p>比如金额<em>一万三千元零两块四毛</em>,数字写作<code>13000.24</code>, 但是在显示的处理以及在会计的计算中,经常会使用会计写法<code>13,000.24</code>.所以有些时候我们需要将数字直接转换为此类表示形式<br><a id="more"></a><br>所以今天涉及到了<code>java.text.NumberFormat</code>类.<br>举个栗子:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BigDecimal money = <span class="keyword">new</span> BigDecimal(<span class="string">"1021380124.127"</span>);</div><div class="line">NumberFormat format = NumberFormat.getCurrencyInstance();</div><div class="line">System.out.println(format.format(money));   <span class="comment">//￥1,021,380,124.127</span></div></pre></td></tr></table></figure></p>
@@ -294,6 +302,8 @@
 &lt;p&gt;比如金额&lt;em&gt;一万三千元零两块四毛&lt;/em&gt;,数字写作&lt;code&gt;13000.24&lt;/code&gt;, 但是在显示的处理以及在会计的计算中,经常会使用会计写法&lt;code&gt;13,000.24&lt;/code&gt;.所以有些时候我们需要将数字直接转换为此类表示形式&lt;br&gt;
     
     </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
