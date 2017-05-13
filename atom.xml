@@ -5,7 +5,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-08T07:24:47.000Z</updated>
+  <updated>2017-05-13T03:10:39.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,56 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>LinkedList解析</title>
+    <link href="http://yoursite.com/2017/05/13/LinkedList%E8%A7%A3%E6%9E%90/"/>
+    <id>http://yoursite.com/2017/05/13/LinkedList解析/</id>
+    <published>2017-05-13T02:35:37.000Z</published>
+    <updated>2017-05-13T03:10:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天我们说一下 <code>LinkedList</code> ,在列表的使用中,我们很多时候会纠结于列表的选择,是选择数组实现的 <code>ArrayList</code> 还是选择链表实现的 <code>LinkedList</code>.</p>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><p>列表的基本属性有三个,和 <code>ArrayList</code> 类似,第一个属性是:<br><a id="more"></a></p>
+<h2 id="列表大小"><a href="#列表大小" class="headerlink" title="列表大小"></a>列表大小</h2><p>用来表示列表存储的元素个数,<br>链表的扩容非常自由,所以它的初始化容量是0<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;</div></pre></td></tr></table></figure></p>
+<h2 id="两个数据元素"><a href="#两个数据元素" class="headerlink" title="两个数据元素"></a>两个数据元素</h2><p><code>LinkedList</code> 是一个双向链表,所以它有两个重要元素,就是<strong><em>头</em></strong>和<strong><em>尾</em></strong>.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">transient</span> Node&lt;E&gt; first;</div><div class="line"><span class="keyword">transient</span> Node&lt;E&gt; last;</div></pre></td></tr></table></figure></p>
+<p> 其中我们有一个 <code>Node</code> 对象.<br> 这是一个很常见的对象,它有着元素内容,前后的元素的引用.<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">    E item;</div><div class="line">    Node&lt;E&gt; next;</div><div class="line">    Node&lt;E&gt; prev;</div><div class="line"></div><div class="line">    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</div><div class="line">        <span class="keyword">this</span>.item = element;</div><div class="line">        <span class="keyword">this</span>.next = next;</div><div class="line">        <span class="keyword">this</span>.prev = prev;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="调整链表"><a href="#调整链表" class="headerlink" title="调整链表"></a>调整链表</h1><p><code>LinkedList</code> 提供几个内部的调整方法,比如:在最前面新增,在最后新增,在某个元素前面新增,移除最前面的,移除最后面的,移除某个元素.<br>这些操作基本上是对于链表中点的引用的调整,来实现这些个方法的.具体的不详细赘述.</p>
+<h1 id="返回某个元素"><a href="#返回某个元素" class="headerlink" title="返回某个元素"></a>返回某个元素</h1><p>我们都知道列表相对于数组最方便的地方在于新增元素,因为我们只需要将点连接到后面就可以了.而不需要考虑在新增一个元素的时候去检查数组长度.</p>
+<p>但是相对于这一点来说,链表也有不方便的一点,就是去获取某个特定的元素:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function">Node&lt;E&gt; <span class="title">node</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (index &lt; (size &gt;&gt; <span class="number">1</span>)) &#123;</div><div class="line">        Node&lt;E&gt; x = first;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; index; i++)</div><div class="line">            x = x.next;</div><div class="line">        <span class="keyword">return</span> x;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        Node&lt;E&gt; x = last;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = size - <span class="number">1</span>; i &gt; index; i--)</div><div class="line">            x = x.prev;</div><div class="line">        <span class="keyword">return</span> x;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在 这里我们看到了,当我们需要获取第 n 个元素的时候,链表需要先检查我们的第 n 个元素是举例头和尾哪个点更近一些,之后再从头或尾开始计算,一个一个去遍历,直到到达我们所需要的点为止.<br>所以这个操作要消耗很多的行为,所以当数据量很大的时候,这种寻找一个点的方式就会变得很慢.<br>当然,这种慢是仅限于在取出的点距离头尾相对较远的情况,如果取出的点是距离头尾很近的情况下,这种速度的影响其实微乎其微.</p>
+<hr>
+<h1 id="ArrayList-和-LinkedList-的差异"><a href="#ArrayList-和-LinkedList-的差异" class="headerlink" title="ArrayList 和 LinkedList 的差异"></a><code>ArrayList</code> 和 <code>LinkedList</code> 的差异</h1><p>所以我们根据上面可以得到结论:</p>
+<blockquote>
+<ul>
+<li>当对于数据列表只是单纯的存储的情况下, <code>LinkedList</code> 的效率要更高一些,因为它避免了在新增一个元素的时候为了考虑扩容的情况所消耗的成本.</li>
+<li>当对于数据列表需要频繁取值的情况下, <code>ArrayList</code> 的效率要更高一点,因为数组在查询某个元素的情况下是可以直接定位到对应的元素位置.</li>
+</ul>
+</blockquote>
+<p>所以我们可以看出,在使用列表的时候,列表的选择其实对于我们的运行效率产生了相当的影响.</p>
+<hr>
+<p>关于 <code>LinkedList</code> 我们就研究到这里,之后我们有机会会继续研究其它的集合类.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天我们说一下 &lt;code&gt;LinkedList&lt;/code&gt; ,在列表的使用中,我们很多时候会纠结于列表的选择,是选择数组实现的 &lt;code&gt;ArrayList&lt;/code&gt; 还是选择链表实现的 &lt;code&gt;LinkedList&lt;/code&gt;.&lt;/p&gt;
+&lt;h1 id=&quot;属性&quot;&gt;&lt;a href=&quot;#属性&quot; class=&quot;headerlink&quot; title=&quot;属性&quot;&gt;&lt;/a&gt;属性&lt;/h1&gt;&lt;p&gt;列表的基本属性有三个,和 &lt;code&gt;ArrayList&lt;/code&gt; 类似,第一个属性是:&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="ArrayList" scheme="http://yoursite.com/tags/ArrayList/"/>
+    
+  </entry>
+  
+  <entry>
     <title>ArrayList解析</title>
     <link href="http://yoursite.com/2017/05/06/ArrayList%E8%A7%A3%E6%9E%90/"/>
     <id>http://yoursite.com/2017/05/06/ArrayList解析/</id>
     <published>2017-05-06T03:00:42.000Z</published>
-    <updated>2017-05-08T07:24:47.000Z</updated>
+    <updated>2017-05-08T14:17:10.000Z</updated>
     
     <content type="html"><![CDATA[<p>今天回头研究一下 java 中的列表 <code>ArrayList</code> ,它表示用数组来存储一系列的对象,并且支持 <code>List</code> 的特性.</p>
 <p>我们今天研究一下它的基础<strong><em>属性</em></strong>, <strong><em>添加方法</em></strong>, 以及与 lambda 相关的部分.</p>
@@ -76,6 +121,8 @@
     
     
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="ArrayList" scheme="http://yoursite.com/tags/ArrayList/"/>
     
   </entry>
   

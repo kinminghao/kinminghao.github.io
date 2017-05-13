@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java,lambda," />
+  <meta name="keywords" content="Java,ArrayList," />
 
 
 
@@ -92,17 +92,17 @@
 
 
 
-<meta name="description" content="简述Java 8 提供了 lambda 表达式.用来实现函数式编程. 可能会有类似的形式:12345678//返回一个对象() -&amp;gt; &amp;#123;return new Random().nextInt();&amp;#125;//消费一个对象x -&amp;gt; &amp;#123; System.out.println(x);&amp;#125;//把一个对象变成另一个x -&amp;gt; &amp;#123;return x *">
-<meta name="keywords" content="Java,lambda">
+<meta name="description" content="今天我们说一下 LinkedList ,在列表的使用中,我们很多时候会纠结于列表的选择,是选择数组实现的 ArrayList 还是选择链表实现的 LinkedList. 属性列表的基本属性有三个,和 ArrayList 类似,第一个属性是:">
+<meta name="keywords" content="Java,ArrayList">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java lambda 简述">
-<meta property="og:url" content="http://yoursite.com/2017/05/05/Java-lambda-简述/index.html">
+<meta property="og:title" content="LinkedList解析">
+<meta property="og:url" content="http://yoursite.com/2017/05/13/LinkedList解析/index.html">
 <meta property="og:site_name" content="既然来了就坐坐吧">
-<meta property="og:description" content="简述Java 8 提供了 lambda 表达式.用来实现函数式编程. 可能会有类似的形式:12345678//返回一个对象() -&amp;gt; &amp;#123;return new Random().nextInt();&amp;#125;//消费一个对象x -&amp;gt; &amp;#123; System.out.println(x);&amp;#125;//把一个对象变成另一个x -&amp;gt; &amp;#123;return x *">
-<meta property="og:updated_time" content="2017-05-05T15:26:47.000Z">
+<meta property="og:description" content="今天我们说一下 LinkedList ,在列表的使用中,我们很多时候会纠结于列表的选择,是选择数组实现的 ArrayList 还是选择链表实现的 LinkedList. 属性列表的基本属性有三个,和 ArrayList 类似,第一个属性是:">
+<meta property="og:updated_time" content="2017-05-13T03:10:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java lambda 简述">
-<meta name="twitter:description" content="简述Java 8 提供了 lambda 表达式.用来实现函数式编程. 可能会有类似的形式:12345678//返回一个对象() -&amp;gt; &amp;#123;return new Random().nextInt();&amp;#125;//消费一个对象x -&amp;gt; &amp;#123; System.out.println(x);&amp;#125;//把一个对象变成另一个x -&amp;gt; &amp;#123;return x *">
+<meta name="twitter:title" content="LinkedList解析">
+<meta name="twitter:description" content="今天我们说一下 LinkedList ,在列表的使用中,我们很多时候会纠结于列表的选择,是选择数组实现的 ArrayList 还是选择链表实现的 LinkedList. 属性列表的基本属性有三个,和 ArrayList 类似,第一个属性是:">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/05/Java-lambda-简述/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/13/LinkedList解析/"/>
 
 
 
 
 
-  <title>Java lambda 简述 | 既然来了就坐坐吧</title>
+  <title>LinkedList解析 | 既然来了就坐坐吧</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -284,7 +284,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/05/Java-lambda-简述/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/13/LinkedList解析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="kin">
@@ -305,7 +305,7 @@
             
             
               
-                Java lambda 简述
+                LinkedList解析
               
             
           </h1>
@@ -320,8 +320,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-05T22:16:35+08:00">
-                2017-05-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-13T10:35:37+08:00">
+                2017-05-13
               </time>
             
 
@@ -377,30 +377,26 @@
       
 
       
-        <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>Java 8 提供了 lambda 表达式.用来实现函数式编程.</p>
-<p>可能会有类似的形式:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//返回一个对象</span></div><div class="line">() -&gt; &#123;<span class="keyword">return</span> <span class="keyword">new</span> Random().nextInt();&#125;</div><div class="line"><span class="comment">//消费一个对象</span></div><div class="line">x -&gt; &#123; System.out.println(x);&#125;</div><div class="line"><span class="comment">//把一个对象变成另一个</span></div><div class="line">x -&gt; &#123;<span class="keyword">return</span> x * <span class="number">100</span>;&#125;</div><div class="line"><span class="comment">//处理两个对象</span></div><div class="line">(x,y) -&gt; ( <span class="keyword">return</span> x*y;)</div></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<p>可以引用外部对象,但是它必须是既成事实的 final 变量.<br>表示这个变量可以不是 final 的但是只能赋一次值.</p>
-<p>在 java 中,对于只有一个抽象方法的接口.叫做<strong>函数接口</strong>,可以有更多方法,但是只能是默认方法和具体方法.</p>
-<p>所以 java 8 中提供了一个标签<code>@FunctionalInterface</code>用于保证接口是函数接口</p>
-<h2 id="java-8-中提供了几大函数式接口"><a href="#java-8-中提供了几大函数式接口" class="headerlink" title="java 8 中提供了几大函数式接口:"></a>java 8 中提供了几大函数式接口:</h2><h3 id="Predicate"><a href="#Predicate" class="headerlink" title="Predicate"></a>Predicate</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Predicate</span>&lt;<span class="title">T</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>该函数表示一个对象到布尔值类型的转变<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">x -&gt; &#123;<span class="keyword">return</span> <span class="keyword">true</span>;&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Consumer</span>&lt;<span class="title">T</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>该函数表示对一个对象的使用,并且不返回值<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">x -&gt; &#123;System.out.println(x);&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Function</span>&lt;<span class="title">T</span>, <span class="title">R</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>该函数表示对一个对象转变为另一个对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">x -&gt; &#123; <span class="keyword">return</span> (AnotherType)x;&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="Supplier"><a href="#Supplier" class="headerlink" title="Supplier"></a>Supplier</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Supplier</span>&lt;<span class="title">T</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>该函数生成一个类型的对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">() -&gt; &#123;<span class="keyword">return</span> (T)<span class="keyword">new</span> Instance();&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="BiPredicate"><a href="#BiPredicate" class="headerlink" title="BiPredicate"></a>BiPredicate</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BiPredicate</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>该函数表示两个对象到布尔值的转变<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(x,y) -&gt; &#123;<span class="keyword">return</span> x &gt; y;&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="BiConsumer"><a href="#BiConsumer" class="headerlink" title="BiConsumer"></a>BiConsumer</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BiConsumer</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>该函数表示消费两个对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(x,y) -&gt; &#123; System.out.println(x+y);&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="BiFunction"><a href="#BiFunction" class="headerlink" title="BiFunction"></a>BiFunction</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BiFunction</span>&lt;<span class="title">T</span>, <span class="title">U</span>, <span class="title">R</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>该函数消费两个对象 T 和 U 生成一个类型为 R 的对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(T t, U u) -&gt; &#123;<span class="keyword">return</span> (R) r;&#125;</div></pre></td></tr></table></figure></p>
+        <p>今天我们说一下 <code>LinkedList</code> ,在列表的使用中,我们很多时候会纠结于列表的选择,是选择数组实现的 <code>ArrayList</code> 还是选择链表实现的 <code>LinkedList</code>.</p>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><p>列表的基本属性有三个,和 <code>ArrayList</code> 类似,第一个属性是:<br><a id="more"></a></p>
+<h2 id="列表大小"><a href="#列表大小" class="headerlink" title="列表大小"></a>列表大小</h2><p>用来表示列表存储的元素个数,<br>链表的扩容非常自由,所以它的初始化容量是0<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;</div></pre></td></tr></table></figure></p>
+<h2 id="两个数据元素"><a href="#两个数据元素" class="headerlink" title="两个数据元素"></a>两个数据元素</h2><p><code>LinkedList</code> 是一个双向链表,所以它有两个重要元素,就是<strong><em>头</em></strong>和<strong><em>尾</em></strong>.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">transient</span> Node&lt;E&gt; first;</div><div class="line"><span class="keyword">transient</span> Node&lt;E&gt; last;</div></pre></td></tr></table></figure></p>
+<p> 其中我们有一个 <code>Node</code> 对象.<br> 这是一个很常见的对象,它有着元素内容,前后的元素的引用.<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">    E item;</div><div class="line">    Node&lt;E&gt; next;</div><div class="line">    Node&lt;E&gt; prev;</div><div class="line"></div><div class="line">    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</div><div class="line">        <span class="keyword">this</span>.item = element;</div><div class="line">        <span class="keyword">this</span>.next = next;</div><div class="line">        <span class="keyword">this</span>.prev = prev;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="调整链表"><a href="#调整链表" class="headerlink" title="调整链表"></a>调整链表</h1><p><code>LinkedList</code> 提供几个内部的调整方法,比如:在最前面新增,在最后新增,在某个元素前面新增,移除最前面的,移除最后面的,移除某个元素.<br>这些操作基本上是对于链表中点的引用的调整,来实现这些个方法的.具体的不详细赘述.</p>
+<h1 id="返回某个元素"><a href="#返回某个元素" class="headerlink" title="返回某个元素"></a>返回某个元素</h1><p>我们都知道列表相对于数组最方便的地方在于新增元素,因为我们只需要将点连接到后面就可以了.而不需要考虑在新增一个元素的时候去检查数组长度.</p>
+<p>但是相对于这一点来说,链表也有不方便的一点,就是去获取某个特定的元素:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function">Node&lt;E&gt; <span class="title">node</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (index &lt; (size &gt;&gt; <span class="number">1</span>)) &#123;</div><div class="line">        Node&lt;E&gt; x = first;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; index; i++)</div><div class="line">            x = x.next;</div><div class="line">        <span class="keyword">return</span> x;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        Node&lt;E&gt; x = last;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = size - <span class="number">1</span>; i &gt; index; i--)</div><div class="line">            x = x.prev;</div><div class="line">        <span class="keyword">return</span> x;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在 这里我们看到了,当我们需要获取第 n 个元素的时候,链表需要先检查我们的第 n 个元素是举例头和尾哪个点更近一些,之后再从头或尾开始计算,一个一个去遍历,直到到达我们所需要的点为止.<br>所以这个操作要消耗很多的行为,所以当数据量很大的时候,这种寻找一个点的方式就会变得很慢.<br>当然,这种慢是仅限于在取出的点距离头尾相对较远的情况,如果取出的点是距离头尾很近的情况下,这种速度的影响其实微乎其微.</p>
 <hr>
-<p>在很多的方法中会要求参数中返回如上的一些接口实例,当我们需要传入对应的接口对象的时候,我们可以用函数 lambda 来代替对接口的实现类.<br>通常代码中会通过接口类型来提示我们需要使用的函数类型.我们可以根据如上给出的例子来实现接口.<br>实例可参考之前的文章: <a href="/2017/05/04/CompletableFuture解析/" title="CompletableFuture解析">CompletableFuture解析</a></p>
+<h1 id="ArrayList-和-LinkedList-的差异"><a href="#ArrayList-和-LinkedList-的差异" class="headerlink" title="ArrayList 和 LinkedList 的差异"></a><code>ArrayList</code> 和 <code>LinkedList</code> 的差异</h1><p>所以我们根据上面可以得到结论:</p>
+<blockquote>
+<ul>
+<li>当对于数据列表只是单纯的存储的情况下, <code>LinkedList</code> 的效率要更高一些,因为它避免了在新增一个元素的时候为了考虑扩容的情况所消耗的成本.</li>
+<li>当对于数据列表需要频繁取值的情况下, <code>ArrayList</code> 的效率要更高一点,因为数组在查询某个元素的情况下是可以直接定位到对应的元素位置.</li>
+</ul>
+</blockquote>
+<p>所以我们可以看出,在使用列表的时候,列表的选择其实对于我们的运行效率产生了相当的影响.</p>
 <hr>
-<p>本篇只是一个简单的介绍,如果有机会后面会继续介绍相关的内容.</p>
+<p>关于 <code>LinkedList</code> 我们就研究到这里,之后我们有机会会继续研究其它的集合类.</p>
 
       
     </div>
@@ -432,7 +428,7 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/lambda/" rel="tag"># lambda</a>
+            <a href="/tags/ArrayList/" rel="tag"># ArrayList</a>
           
         </div>
       
@@ -445,18 +441,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/06/ArrayList解析/" rel="next" title="ArrayList解析">
-                <i class="fa fa-chevron-left"></i> ArrayList解析
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/04/CompletableFuture解析/" rel="prev" title="CompletableFuture解析">
-                CompletableFuture解析 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/06/ArrayList解析/" rel="prev" title="ArrayList解析">
+                ArrayList解析 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -610,7 +602,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简述"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-8-中提供了几大函数式接口"><span class="nav-number">2.</span> <span class="nav-text">java 8 中提供了几大函数式接口:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Predicate"><span class="nav-number">2.1.</span> <span class="nav-text">Predicate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Consumer"><span class="nav-number">2.2.</span> <span class="nav-text">Consumer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function"><span class="nav-number">2.3.</span> <span class="nav-text">Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Supplier"><span class="nav-number">2.4.</span> <span class="nav-text">Supplier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BiPredicate"><span class="nav-number">2.5.</span> <span class="nav-text">BiPredicate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BiConsumer"><span class="nav-number">2.6.</span> <span class="nav-text">BiConsumer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BiFunction"><span class="nav-number">2.7.</span> <span class="nav-text">BiFunction</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#属性"><span class="nav-number">1.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#列表大小"><span class="nav-number">1.1.</span> <span class="nav-text">列表大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两个数据元素"><span class="nav-number">1.2.</span> <span class="nav-text">两个数据元素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调整链表"><span class="nav-number">2.</span> <span class="nav-text">调整链表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#返回某个元素"><span class="nav-number">3.</span> <span class="nav-text">返回某个元素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ArrayList-和-LinkedList-的差异"><span class="nav-number">4.</span> <span class="nav-text">ArrayList 和 LinkedList 的差异</span></a></li></ol></div>
             
 
           </div>
