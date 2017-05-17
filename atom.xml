@@ -5,7 +5,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-13T03:10:39.000Z</updated>
+  <updated>2017-05-17T14:11:22.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,86 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>LocalDateTime 简述</title>
+    <link href="http://yoursite.com/2017/05/16/LocalDateTime-%E7%AE%80%E8%BF%B0/"/>
+    <id>http://yoursite.com/2017/05/16/LocalDateTime-简述/</id>
+    <published>2017-05-16T09:21:56.000Z</published>
+    <updated>2017-05-17T14:11:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Java 8 更新的部分内容中,有一部分代替了以往比较难用的 java.util.Date 类,并且创建了一套新的时间类型,该类型为: java.time.LocalDateTime.<br><code>LocalDateTime</code> 提供了许多方法供我们使用,</p>
+<h1 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">java.time.LocalDate</div><div class="line">java.time.LocalTime</div><div class="line">java.time.LocalDateTime</div><div class="line">java.time.ZoneId</div><div class="line">java.time.format.DateTimeFormatter</div></pre></td></tr></table></figure>
+<p>java.time 包中提供的工具方法和类非常之多,但是我们在使用的时候基本上很难用到这里面所有的方法,很多时候我们甚至只了解其中的三分之一.<br><a id="more"></a><br>这些包中, <code>LocalDate</code> 表示日期, <code>LocalTime</code> 表示时间, <code>LocalDateTime</code> 表示日期和时间的组合.<br><code>ZoneId</code> 表示时区,一般情况下可以使用 <code>ZoneId.systemDefault()</code> 获取当前系统默认的时区.当然,存在系统时区不正常的情况下我们可以使用 <code>ZoneId.of(&quot;Asia/Shanghai&quot;)</code> 的方法来避免.<br><code>DateTimeFormatte</code> 包含了许多<code>DateTimeFormatte</code>类型的静态变量,它支持各种类型的日期和字符串之间的转换,具体的情况我们可以通过注释来查看.</p>
+<h1 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a>基本方法</h1><p>我们对于时间最常用的方法是获取时间,时间和字符串的转换,以及计算时间.<br>时间对象已经自带了很多的比较,计算的方法,相当显而易见,所以在这里不加赘述,大家可以直接进行调用.</p>
+<h2 id="获取时间"><a href="#获取时间" class="headerlink" title="获取时间"></a>获取时间</h2><p><code>LocalDate</code> <code>LocalTime</code> <code>LocalDateTime</code> 三个工具分别表示对应的时间,他们都有一些类似的方法,比如:</p>
+<ul>
+<li><code>now</code> 方法都会获取到当前的时间.都有 <code>MIN</code>,<code>MAX</code> 属性,表示最大和最小的时间. </li>
+<li><p><code>of</code> 方法会要求传入对应的 年月日时分秒 的信息,来返回对应的时间.<br>还有一些比较有趣的方法比如:<br><code>LocalDate</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LocalDate <span class="title">ofYearDay</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> dayOfYear)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LocalDate <span class="title">ofEpochDay</span><span class="params">(<span class="keyword">long</span> epochDay)</span></span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>ofYearDay</code> 表示某一年的第几天,它会计算好对应的天数并且返回对应的日期.</p>
+</li>
+<li><code>ofEpochDay</code> 表示从 <strong><em>1970-01-01</em></strong> 开始计算之后的第几天的日期.</li>
+</ul>
+<p><code>LocalTime</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LocalTime <span class="title">ofSecondOfDay</span><span class="params">(<span class="keyword">long</span> secondOfDay)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LocalTime <span class="title">ofNanoOfDay</span><span class="params">(<span class="keyword">long</span> nanoOfDay)</span></span>;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><code>ofSecondOfDay</code> 表示从一天开始的以秒计时的时间.</li>
+<li><code>ofNanoOfDay</code> 表示从一天的开始的以纳秒计时的时间.</li>
+</ul>
+<p>当然, <code>LocalDateTime</code> 也有一个名为 <code>ofEpochSecond</code> 的方法可以返回从  <strong><em>1970-01-01 00:00:00</em></strong> 开始计时的以秒计时的具体的时间日期,但是我目前没想到有什么用处.</p>
+<h3 id="完整时间"><a href="#完整时间" class="headerlink" title="完整时间"></a>完整时间</h3><p>我们可以通过一些简单的方法获取对应的时间.<br>比如:<br><code>LocalDate</code> 有一个最简单的 <code>atTime</code> 方法可以传入对应的 <code>LocalTime</code> 对象获取完整的时间. 或者可以选择 <code>atStartOfDay</code> 方法来获取这一天的开始时间.</p>
+<p><code>LocalTime</code> 同样也可以使用 <code>atDate</code> 方法来获取完整时间.</p>
+<p>或者我们可以调用 <code>LocalDateTime</code> 方法的 <code>of</code> 方法来传入 <code>LocalDate</code> 和 <code>LocalTime</code> 对象来获得对应的时间.</p>
+<h1 id="字符串转换"><a href="#字符串转换" class="headerlink" title="字符串转换"></a>字符串转换</h1><h2 id="字符串-gt-时间"><a href="#字符串-gt-时间" class="headerlink" title="字符串 -&gt; 时间"></a>字符串 -&gt; 时间</h2><p>parse 可以将字符串转换为对应的时间类型.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">LocalDate date = LocalDate.parse(<span class="string">"2017-02-12"</span>);</div><div class="line">LocalTime time = LocalTime.parse(<span class="string">"12:23:52"</span>);</div></pre></td></tr></table></figure>
+<p>除了这个我们还可以同时传入对应的 Formatter, 这个我们会在本文末尾提及.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LocalDate date = LocalDate.parse(<span class="string">"19870412"</span>, DateTimeFormatter.BASIC_ISO_DATE);</div></pre></td></tr></table></figure>
+<h2 id="时间-gt-字符串"><a href="#时间-gt-字符串" class="headerlink" title="时间 -&gt; 字符串"></a>时间 -&gt; 字符串</h2><p>format 方法可以将时间转换成字符串.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ZonedDateTime dateTime = ZonedDateTime.now();</div><div class="line">DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;</div><div class="line">dateTime.format(formatter);</div><div class="line">formatter.format(dateTime);</div></pre></td></tr></table></figure>
+<p>我们需要对应的时间对象以及格式化对象,之后我们可以对任何一个对象进行 <code>format</code> 格式化.</p>
+<h1 id="DateTimeFormatter"><a href="#DateTimeFormatter" class="headerlink" title="DateTimeFormatter"></a>DateTimeFormatter</h1><p>这里我们只描述有关 <code>DateTimeFormatter</code> 的静态属性:</p>
+<ul>
+<li><code>ISO_LOCAL_DATE</code> 日期: 例子: 2011-12-03</li>
+<li><code>ISO_OFFSET_DATE</code> 日期: 例子: 2011-12-03+01:00</li>
+<li><code>ISO_DATE</code> 日期: 例子: 2011-12-03 或者 2011-12-03+01:00</li>
+<li><code>ISO_LOCAL_TIME</code> 时间: 例子: 10:15 或者 10:15:30</li>
+<li><code>ISO_OFFSET_TIME</code> 带时区时间: 例子: 10:15+01:00 或者 10:15:30+01:00’</li>
+<li><code>ISO_TIME</code> 时间: 例子: 10:15 或者 10:15:30 或者 10:15:30+01:00</li>
+<li><code>ISO_LOCAL_DATE_TIME</code> 完整时间: 例子: 2011-12-03T10:15:30</li>
+<li><code>ISO_OFFSET_DATE_TIME</code> 带时区完整时间: 例子: 2011-12-03T10:15:30+01:00</li>
+<li><code>ISO_ZONED_DATE_TIME</code> 带时区带地区完整时间: 例子: 2011-12-03T10:15:30+01:00[Europe/Paris]</li>
+<li><code>ISO_DATE_TIME</code> 完整时间: 例子: 2011-12-03T10:15:30 或者 2011-12-03T10:15:30+01:00 或者2011-12-03T10:15:30+01:00[Europe/Paris]</li>
+<li><code>ISO_ORDINAL_DATE</code> 天数的日期: 例子: 2012-337 </li>
+<li><code>ISO_WEEK_DATE</code> 按周的日期: 例子: 2012-W48-6</li>
+<li><code>ISO_INSTANT</code> 完整时间: 例子: 2011-12-03T10:15:30Z</li>
+<li><code>BASIC_ISO_DATE</code> 日期: 例子: 20111203</li>
+<li><code>RFC_1123_DATE_TIME</code> 完整时间 例子: Tue, 3 Jun 2008 11:05:30 GMT</li>
+</ul>
+<p><strong><em>转换时间的时候如果是带有时区的 formatter 我们需要使用 ZoneDateTime.</em></strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Java 8 更新的部分内容中,有一部分代替了以往比较难用的 java.util.Date 类,并且创建了一套新的时间类型,该类型为: java.time.LocalDateTime.&lt;br&gt;&lt;code&gt;LocalDateTime&lt;/code&gt; 提供了许多方法供我们使用,&lt;/p&gt;
+&lt;h1 id=&quot;基本类型&quot;&gt;&lt;a href=&quot;#基本类型&quot; class=&quot;headerlink&quot; title=&quot;基本类型&quot;&gt;&lt;/a&gt;基本类型&lt;/h1&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;java.time.LocalDate&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;java.time.LocalTime&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;java.time.LocalDateTime&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;java.time.ZoneId&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;java.time.format.DateTimeFormatter&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;java.time 包中提供的工具方法和类非常之多,但是我们在使用的时候基本上很难用到这里面所有的方法,很多时候我们甚至只了解其中的三分之一.&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Date" scheme="http://yoursite.com/tags/Date/"/>
+    
+  </entry>
+  
+  <entry>
     <title>LinkedList解析</title>
     <link href="http://yoursite.com/2017/05/13/LinkedList%E8%A7%A3%E6%9E%90/"/>
     <id>http://yoursite.com/2017/05/13/LinkedList解析/</id>
     <published>2017-05-13T02:35:37.000Z</published>
-    <updated>2017-05-13T03:10:39.000Z</updated>
+    <updated>2017-05-13T06:51:25.000Z</updated>
     
     <content type="html"><![CDATA[<p>今天我们说一下 <code>LinkedList</code> ,在列表的使用中,我们很多时候会纠结于列表的选择,是选择数组实现的 <code>ArrayList</code> 还是选择链表实现的 <code>LinkedList</code>.</p>
 <h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><p>列表的基本属性有三个,和 <code>ArrayList</code> 类似,第一个属性是:<br><a id="more"></a></p>

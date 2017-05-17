@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java,Future,lambda,异步," />
+  <meta name="keywords" content="Java,Date," />
 
 
 
@@ -92,17 +92,17 @@
 
 
 
-<meta name="description" content="在上一节 Java异步调用1 中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
-<meta name="keywords" content="Java,Future,lambda,异步">
+<meta name="description" content="Java 8 更新的部分内容中,有一部分代替了以往比较难用的 java.util.Date 类,并且创建了一套新的时间类型,该类型为: java.time.LocalDateTime.LocalDateTime 提供了许多方法供我们使用, 基本类型12345java.time.LocalDatejava.time.LocalTimejava.time.LocalDateTimejava.time.">
+<meta name="keywords" content="Java,Date">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java异步调用2">
-<meta property="og:url" content="http://yoursite.com/2017/05/03/Java异步调用2/index.html">
+<meta property="og:title" content="LocalDateTime 简述">
+<meta property="og:url" content="http://yoursite.com/2017/05/16/LocalDateTime-简述/index.html">
 <meta property="og:site_name" content="既然来了就坐坐吧">
-<meta property="og:description" content="在上一节 Java异步调用1 中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
-<meta property="og:updated_time" content="2017-05-05T13:11:11.000Z">
+<meta property="og:description" content="Java 8 更新的部分内容中,有一部分代替了以往比较难用的 java.util.Date 类,并且创建了一套新的时间类型,该类型为: java.time.LocalDateTime.LocalDateTime 提供了许多方法供我们使用, 基本类型12345java.time.LocalDatejava.time.LocalTimejava.time.LocalDateTimejava.time.">
+<meta property="og:updated_time" content="2017-05-17T14:11:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java异步调用2">
-<meta name="twitter:description" content="在上一节 Java异步调用1 中 我们提到了在需要使用异步调用的情况下如何使用 FutureTask 工具进行异步调用,并且提示了相关代码 在上面的例子中,我们使用了Callable接口来实现了异步工作. 但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low. 所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.">
+<meta name="twitter:title" content="LocalDateTime 简述">
+<meta name="twitter:description" content="Java 8 更新的部分内容中,有一部分代替了以往比较难用的 java.util.Date 类,并且创建了一套新的时间类型,该类型为: java.time.LocalDateTime.LocalDateTime 提供了许多方法供我们使用, 基本类型12345java.time.LocalDatejava.time.LocalTimejava.time.LocalDateTimejava.time.">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/03/Java异步调用2/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/16/LocalDateTime-简述/"/>
 
 
 
 
 
-  <title>Java异步调用2 | 既然来了就坐坐吧</title>
+  <title>LocalDateTime 简述 | 既然来了就坐坐吧</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -284,7 +284,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/03/Java异步调用2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/LocalDateTime-简述/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="kin">
@@ -305,7 +305,7 @@
             
             
               
-                Java异步调用2
+                LocalDateTime 简述
               
             
           </h1>
@@ -320,8 +320,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-03T18:29:32+08:00">
-                2017-05-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-16T17:21:56+08:00">
+                2017-05-16
               </time>
             
 
@@ -377,15 +377,55 @@
       
 
       
-        <p>在上一节 <a href="/2017/04/26/Java异步调用1/" title="Java异步调用1">Java异步调用1</a> 中 我们提到了在需要使用异步调用的情况下如何使用 <code>FutureTask</code> 工具进行异步调用,并且提示了相关代码</p>
-<p>在上面的例子中,我们使用了<code>Callable</code>接口来实现了异步工作.</p>
-<p>但是在 Java 8 开始频繁使用的现在,我们经常会觉得这种实现方式比较low.</p>
-<p>所以本节提到了在 Java 8 的环境下如何使用 lambda 来实现异步操作.<br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//先建立了一个拥有五个线程的线程池</span></div><div class="line">ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">5</span>);</div><div class="line"><span class="comment">//分别建立了对应的五个异步对象,并且传入 executor</span></div><div class="line">CompletableFuture&lt;JSONObject&gt; generalA = getGeneralFuture(receiver, MessageType.A,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalB = getGeneralFuture(receiver, MessageType.B,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalC = getGeneralFuture(receiver, MessageType.C,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalD = getGeneralFuture(receiver, MessageType.D,executorService);</div><div class="line">CompletableFuture&lt;JSONObject&gt; generalE = getGeneralFuture(receiver, MessageType.E,executorService);</div><div class="line"></div><div class="line"><span class="comment">//获取到五个对应的异步结果,时间取决于最慢的一个异步方法</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    response.put(<span class="string">"a_result"</span>, generalA.get());</div><div class="line">    response.put(<span class="string">"b_result"</span>, generalB.get());</div><div class="line">    response.put(<span class="string">"c_result"</span>, generalC.get());</div><div class="line">    response.put(<span class="string">"d_result"</span>, generalD.get());</div><div class="line">    response.put(<span class="string">"e_result"</span>, generalE.get());</div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">finally</span> &#123;</div><div class="line">    <span class="comment">//在所有结束情形下关闭线程池,回收资源</span></div><div class="line">    executorService.shutdown();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>下面是<code>getGeneralFuture</code>的代码,</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//传入一个lambda函数来处理逻辑</span></div><div class="line"><span class="function"><span class="keyword">private</span> CompletableFuture&lt;JSONObject&gt; <span class="title">getGeneralFuture</span><span class="params">(String receiver , MessageType messageType,ExecutorService executorService)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> CompletableFuture.supplyAsync(() -&gt; &#123;</div><div class="line">        <span class="comment">//Do Something ....</span></div><div class="line">        <span class="keyword">return</span> messageJson;</div><div class="line">    &#125;,executorService);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在 java 8 下使用 lambda 执行异步调用就完成了.</p>
-<hr>
-<p>关于这个例子暂时到这里,之后我们会继续学习有关<code>CompletableFuture</code>的内容.</p>
+        <p>Java 8 更新的部分内容中,有一部分代替了以往比较难用的 java.util.Date 类,并且创建了一套新的时间类型,该类型为: java.time.LocalDateTime.<br><code>LocalDateTime</code> 提供了许多方法供我们使用,</p>
+<h1 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">java.time.LocalDate</div><div class="line">java.time.LocalTime</div><div class="line">java.time.LocalDateTime</div><div class="line">java.time.ZoneId</div><div class="line">java.time.format.DateTimeFormatter</div></pre></td></tr></table></figure>
+<p>java.time 包中提供的工具方法和类非常之多,但是我们在使用的时候基本上很难用到这里面所有的方法,很多时候我们甚至只了解其中的三分之一.<br><a id="more"></a><br>这些包中, <code>LocalDate</code> 表示日期, <code>LocalTime</code> 表示时间, <code>LocalDateTime</code> 表示日期和时间的组合.<br><code>ZoneId</code> 表示时区,一般情况下可以使用 <code>ZoneId.systemDefault()</code> 获取当前系统默认的时区.当然,存在系统时区不正常的情况下我们可以使用 <code>ZoneId.of(&quot;Asia/Shanghai&quot;)</code> 的方法来避免.<br><code>DateTimeFormatte</code> 包含了许多<code>DateTimeFormatte</code>类型的静态变量,它支持各种类型的日期和字符串之间的转换,具体的情况我们可以通过注释来查看.</p>
+<h1 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a>基本方法</h1><p>我们对于时间最常用的方法是获取时间,时间和字符串的转换,以及计算时间.<br>时间对象已经自带了很多的比较,计算的方法,相当显而易见,所以在这里不加赘述,大家可以直接进行调用.</p>
+<h2 id="获取时间"><a href="#获取时间" class="headerlink" title="获取时间"></a>获取时间</h2><p><code>LocalDate</code> <code>LocalTime</code> <code>LocalDateTime</code> 三个工具分别表示对应的时间,他们都有一些类似的方法,比如:</p>
+<ul>
+<li><code>now</code> 方法都会获取到当前的时间.都有 <code>MIN</code>,<code>MAX</code> 属性,表示最大和最小的时间. </li>
+<li><p><code>of</code> 方法会要求传入对应的 年月日时分秒 的信息,来返回对应的时间.<br>还有一些比较有趣的方法比如:<br><code>LocalDate</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LocalDate <span class="title">ofYearDay</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> dayOfYear)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LocalDate <span class="title">ofEpochDay</span><span class="params">(<span class="keyword">long</span> epochDay)</span></span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>ofYearDay</code> 表示某一年的第几天,它会计算好对应的天数并且返回对应的日期.</p>
+</li>
+<li><code>ofEpochDay</code> 表示从 <strong><em>1970-01-01</em></strong> 开始计算之后的第几天的日期.</li>
+</ul>
+<p><code>LocalTime</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LocalTime <span class="title">ofSecondOfDay</span><span class="params">(<span class="keyword">long</span> secondOfDay)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LocalTime <span class="title">ofNanoOfDay</span><span class="params">(<span class="keyword">long</span> nanoOfDay)</span></span>;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><code>ofSecondOfDay</code> 表示从一天开始的以秒计时的时间.</li>
+<li><code>ofNanoOfDay</code> 表示从一天的开始的以纳秒计时的时间.</li>
+</ul>
+<p>当然, <code>LocalDateTime</code> 也有一个名为 <code>ofEpochSecond</code> 的方法可以返回从  <strong><em>1970-01-01 00:00:00</em></strong> 开始计时的以秒计时的具体的时间日期,但是我目前没想到有什么用处.</p>
+<h3 id="完整时间"><a href="#完整时间" class="headerlink" title="完整时间"></a>完整时间</h3><p>我们可以通过一些简单的方法获取对应的时间.<br>比如:<br><code>LocalDate</code> 有一个最简单的 <code>atTime</code> 方法可以传入对应的 <code>LocalTime</code> 对象获取完整的时间. 或者可以选择 <code>atStartOfDay</code> 方法来获取这一天的开始时间.</p>
+<p><code>LocalTime</code> 同样也可以使用 <code>atDate</code> 方法来获取完整时间.</p>
+<p>或者我们可以调用 <code>LocalDateTime</code> 方法的 <code>of</code> 方法来传入 <code>LocalDate</code> 和 <code>LocalTime</code> 对象来获得对应的时间.</p>
+<h1 id="字符串转换"><a href="#字符串转换" class="headerlink" title="字符串转换"></a>字符串转换</h1><h2 id="字符串-gt-时间"><a href="#字符串-gt-时间" class="headerlink" title="字符串 -&gt; 时间"></a>字符串 -&gt; 时间</h2><p>parse 可以将字符串转换为对应的时间类型.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">LocalDate date = LocalDate.parse(<span class="string">"2017-02-12"</span>);</div><div class="line">LocalTime time = LocalTime.parse(<span class="string">"12:23:52"</span>);</div></pre></td></tr></table></figure>
+<p>除了这个我们还可以同时传入对应的 Formatter, 这个我们会在本文末尾提及.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LocalDate date = LocalDate.parse(<span class="string">"19870412"</span>, DateTimeFormatter.BASIC_ISO_DATE);</div></pre></td></tr></table></figure>
+<h2 id="时间-gt-字符串"><a href="#时间-gt-字符串" class="headerlink" title="时间 -&gt; 字符串"></a>时间 -&gt; 字符串</h2><p>format 方法可以将时间转换成字符串.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ZonedDateTime dateTime = ZonedDateTime.now();</div><div class="line">DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;</div><div class="line">dateTime.format(formatter);</div><div class="line">formatter.format(dateTime);</div></pre></td></tr></table></figure>
+<p>我们需要对应的时间对象以及格式化对象,之后我们可以对任何一个对象进行 <code>format</code> 格式化.</p>
+<h1 id="DateTimeFormatter"><a href="#DateTimeFormatter" class="headerlink" title="DateTimeFormatter"></a>DateTimeFormatter</h1><p>这里我们只描述有关 <code>DateTimeFormatter</code> 的静态属性:</p>
+<ul>
+<li><code>ISO_LOCAL_DATE</code> 日期: 例子: 2011-12-03</li>
+<li><code>ISO_OFFSET_DATE</code> 日期: 例子: 2011-12-03+01:00</li>
+<li><code>ISO_DATE</code> 日期: 例子: 2011-12-03 或者 2011-12-03+01:00</li>
+<li><code>ISO_LOCAL_TIME</code> 时间: 例子: 10:15 或者 10:15:30</li>
+<li><code>ISO_OFFSET_TIME</code> 带时区时间: 例子: 10:15+01:00 或者 10:15:30+01:00’</li>
+<li><code>ISO_TIME</code> 时间: 例子: 10:15 或者 10:15:30 或者 10:15:30+01:00</li>
+<li><code>ISO_LOCAL_DATE_TIME</code> 完整时间: 例子: 2011-12-03T10:15:30</li>
+<li><code>ISO_OFFSET_DATE_TIME</code> 带时区完整时间: 例子: 2011-12-03T10:15:30+01:00</li>
+<li><code>ISO_ZONED_DATE_TIME</code> 带时区带地区完整时间: 例子: 2011-12-03T10:15:30+01:00[Europe/Paris]</li>
+<li><code>ISO_DATE_TIME</code> 完整时间: 例子: 2011-12-03T10:15:30 或者 2011-12-03T10:15:30+01:00 或者2011-12-03T10:15:30+01:00[Europe/Paris]</li>
+<li><code>ISO_ORDINAL_DATE</code> 天数的日期: 例子: 2012-337 </li>
+<li><code>ISO_WEEK_DATE</code> 按周的日期: 例子: 2012-W48-6</li>
+<li><code>ISO_INSTANT</code> 完整时间: 例子: 2011-12-03T10:15:30Z</li>
+<li><code>BASIC_ISO_DATE</code> 日期: 例子: 20111203</li>
+<li><code>RFC_1123_DATE_TIME</code> 完整时间 例子: Tue, 3 Jun 2008 11:05:30 GMT</li>
+</ul>
+<p><strong><em>转换时间的时候如果是带有时区的 formatter 我们需要使用 ZoneDateTime.</em></strong></p>
 
       
     </div>
@@ -417,11 +457,7 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/Future/" rel="tag"># Future</a>
-          
-            <a href="/tags/lambda/" rel="tag"># lambda</a>
-          
-            <a href="/tags/异步/" rel="tag"># 异步</a>
+            <a href="/tags/Date/" rel="tag"># Date</a>
           
         </div>
       
@@ -434,18 +470,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/04/CompletableFuture解析/" rel="next" title="CompletableFuture解析">
-                <i class="fa fa-chevron-left"></i> CompletableFuture解析
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/26/Java异步调用1/" rel="prev" title="Java异步调用1">
-                Java异步调用1 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/13/LinkedList解析/" rel="prev" title="LinkedList解析">
+                LinkedList解析 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -499,8 +531,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/yellow_head.png"
@@ -580,6 +621,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本类型"><span class="nav-number">1.</span> <span class="nav-text">基本类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本方法"><span class="nav-number">2.</span> <span class="nav-text">基本方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取时间"><span class="nav-number">2.1.</span> <span class="nav-text">获取时间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#完整时间"><span class="nav-number">2.1.1.</span> <span class="nav-text">完整时间</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串转换"><span class="nav-number">3.</span> <span class="nav-text">字符串转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串-gt-时间"><span class="nav-number">3.1.</span> <span class="nav-text">字符串 -> 时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间-gt-字符串"><span class="nav-number">3.2.</span> <span class="nav-text">时间 -> 字符串</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DateTimeFormatter"><span class="nav-number">4.</span> <span class="nav-text">DateTimeFormatter</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
