@@ -5,7 +5,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-17T14:11:22.000Z</updated>
+  <updated>2017-05-30T12:53:29.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,90 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java8 : Optional 解析</title>
+    <link href="http://yoursite.com/2017/05/30/Java8-Optional-%E8%A7%A3%E6%9E%90/"/>
+    <id>http://yoursite.com/2017/05/30/Java8-Optional-解析/</id>
+    <published>2017-05-30T06:08:27.000Z</published>
+    <updated>2017-05-30T12:53:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>自古以来, Java 开发者们都会遇到一个让人又爱又恨的异常: <code>NullPointException</code>, 为了解决这个问题, Java8 中新引入了一个工具叫做 <code>Optional</code> ,是用来存储对象并且去解决空对象问题的包装类, 用以避免产生 Java 中的空指针异常.<br><a id="more"></a></p>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> T value;</div></pre></td></tr></table></figure>
+<p>Optional 对象中包装着一个泛型方法的对象, 当我们在包装类中存放着对应的方法的时候, 我们可以检验这个值是否存在,并且在适当的时候取出这个值来.<br></p>
+<h1 id="产生对象"><a href="#产生对象" class="headerlink" title="产生对象"></a>产生对象</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Optional&lt;T&gt; <span class="title">of</span><span class="params">(T value)</span></span>;</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Optional&lt;T&gt; <span class="title">ofNullable</span><span class="params">(T value)</span></span>;</div></pre></td></tr></table></figure>
+<p>Optional 对象有两个方法:</p>
+<ul>
+<li><code>of</code> 方法提供一个构造方法, 会将传入的对象引入 <code>Optional</code> 类的构造方法中, 默认构造方法会在调用时检查对象是否为 null , <strong><em>如果为空的话,将会抛出一个空指针异常</em></strong>.</li>
+<li><code>ofNullable</code> 方法在调用构造器之前会提供一个事前检查,如果传入的对象为空的话,则会自动返回一个空的 Optional 对象,如果传入对象不为空的话,则  <strong><em>返回一个包含着该对象的包装类</em></strong> .</li>
+</ul>
+<h1 id="检查对象"><a href="#检查对象" class="headerlink" title="检查对象"></a>检查对象</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPresent</span><span class="params">()</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ifPresent</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> T&gt; consumer)</span></span>;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>isPresent</code> 方法返回对象是否存在,如果存在则返回 <code>true</code> 否则返回 <code>false</code> </li>
+<li><code>ifPresent</code> 方法传入一个消费函数, 当对应的值存在的时候, 则去执行对应的消费函数内容.</li>
+</ul>
+<h1 id="获取对象"><a href="#获取对象" class="headerlink" title="获取对象"></a>获取对象</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> T <span class="title">orElse</span><span class="params">(T other)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> T <span class="title">orElseGet</span><span class="params">(Supplier&lt;? extends T&gt; other)</span></span>;</div><div class="line"><span class="keyword">public</span> &lt;X extends Throwable&gt; <span class="function">T <span class="title">orElseThrow</span><span class="params">(Supplier&lt;? extends X&gt; exceptionSupplier)</span> <span class="keyword">throws</span> X</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>get</code> 方法将会检查包装类的值,如果为空的话则抛出一个 <code>NoSuchElementException</code> 异常. 不为空的话就返回对应的对象内容.</li>
+<li><code>orElse</code> 方法和 <code>get</code> 方法一样,会检查内容是否存在并且返回对象,但是有所不同的内容是, 当内容为空的时候将会返回默认的 <code>other</code> 的对象.</li>
+<li><code>orElseGet</code> 方法传入一个生产函数,和 <code>orElse</code> 方法类似,当对象内容为空的时候会自动的调用生产函数的内容,并且将函数生成的对象返回给方法.</li>
+<li><code>orElseThrow</code> 方法传入一个生产一个继承自 <code>Throwable</code> 的生产函数, 当对象内容为空的时候调用生产函数的方法, 并且将生产出来的 <code>Throwable</code> 对象抛出.</li>
+</ul>
+<h1 id="处理对象"><a href="#处理对象" class="headerlink" title="处理对象"></a>处理对象</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Optional&lt;T&gt; <span class="title">filter</span><span class="params">(Predicate&lt;? <span class="keyword">super</span> T&gt; predicate)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span>&lt;U&gt; Optional&lt;U&gt; <span class="title">map</span><span class="params">(Function&lt;? <span class="keyword">super</span> T, ? extends U&gt; mapper)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span>&lt;U&gt; Optional&lt;U&gt; <span class="title">flatMap</span><span class="params">(Function&lt;? <span class="keyword">super</span> T, Optional&lt;U&gt;&gt; mapper)</span></span>;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>filter</code> 过滤器方法传入一个判断函数, 如果 Optional 对象中不包含任何元素, <code>filter</code> 方法返回一个空的 Optional 对象, 如果调用函数返回一个 <code>false</code>, 则会返回一个空的 Optional 对象, 如果返回 <code>true</code>, 则会得到现在的 Optional 对象.</li>
+<li><code>map</code> 方法传入一个 <code>Function</code> 函数, 并且取的其中的内容, 并对内容执行该函数,返回结果放入一个新的 Optional 对象中. 如果原有对象是空的,那么我们将会获得一个空的对象.</li>
+<li><code>flatMap</code> 方法也传入一个 <code>Function</code> 函数,但是这个函数是一个 <code>V -&gt; Optional&lt;U&gt;</code> 的函数.它的实现和 <code>map</code> 方法相同.但是返回值是一个 <code>Optional&lt;U&gt;</code> 而不是一个 <code>Optional&lt;Optional&lt;U&gt;&gt;</code>.</li>
+</ul>
+<hr>
+<p>Optional 对象十分适合于包装各种不确定的返回数据. 但是其使用方式不是每次都获取其中的具体内容,或者每次调用 <code>get</code> 或者 <code>isPresent</code> 方法来确认内容是否存在.而是经常调用 <code>filter</code>, <code>map</code> 等方法直接对内容进行操作.直到获得最后的值.<br>具体的实现非常类似其他函数式编程语言的使用精髓.我们可以从中获取参考.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;自古以来, Java 开发者们都会遇到一个让人又爱又恨的异常: &lt;code&gt;NullPointException&lt;/code&gt;, 为了解决这个问题, Java8 中新引入了一个工具叫做 &lt;code&gt;Optional&lt;/code&gt; ,是用来存储对象并且去解决空对象问题的包装类, 用以避免产生 Java 中的空指针异常.&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Optional" scheme="http://yoursite.com/tags/Optional/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HashMap解析</title>
+    <link href="http://yoursite.com/2017/05/18/HashMap%E8%A7%A3%E6%9E%90/"/>
+    <id>http://yoursite.com/2017/05/18/HashMap解析/</id>
+    <published>2017-05-18T13:56:15.000Z</published>
+    <updated>2017-05-19T02:01:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p><code>HashMap</code> 是我们在 java 中最频繁出现的一种数据存储工具. 它以 键-值 对的方式来存储数据,作为一个高效存储工具,它很频繁的受到了我们的使用.<br>但是其内部实现原理很多人都不是特别清楚,在这里我们一起研究一下.</p>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><ul>
+<li><code>table</code>:使用 <code>Node&lt;K,V&gt;</code> 对象进行数据的存储是一个链表,它有四个属性,分别是 哈希值, key, value, 指向下一个节点的指针.</li>
+<li><code>entrySet</code>: 键值对的集合来存储对应的集合数据.</li>
+<li><code>size</code>: 表示键值对集合的大小</li>
+<li><code>modCount</code> 修改次数,和 <code>ArrayList</code> 类似,表示修改次数,用以确保同步.</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot; title=&quot;简述&quot;&gt;&lt;/a&gt;简述&lt;/h1&gt;&lt;p&gt;&lt;code&gt;HashMap&lt;/code&gt; 是我们在 java 中最频繁出现的一种数据存储工具. 它以 键-值 对的方式来存储数据,作为一个高
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Map" scheme="http://yoursite.com/tags/Map/"/>
+    
+  </entry>
   
   <entry>
     <title>LocalDateTime 简述</title>

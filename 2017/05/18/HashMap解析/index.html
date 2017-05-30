@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java,Map," />
 
 
 
@@ -92,15 +92,17 @@
 
 
 
-<meta name="description" content="此广告位长年招租">
-<meta property="og:type" content="website">
-<meta property="og:title" content="既然来了就坐坐吧">
-<meta property="og:url" content="http://yoursite.com/archives/2017/04/index.html">
+<meta name="description" content="简述HashMap 是我们在 java 中最频繁出现的一种数据存储工具. 它以 键-值 对的方式来存储数据,作为一个高效存储工具,它很频繁的受到了我们的使用.但是其内部实现原理很多人都不是特别清楚,在这里我们一起研究一下. 属性 table:使用 Node&amp;lt;K,V&amp;gt; 对象进行数据的存储是一个链表,它有四个属性,分别是 哈希值, key, value, 指向下一个节点的指针. entry">
+<meta name="keywords" content="Java,Map">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap解析">
+<meta property="og:url" content="http://yoursite.com/2017/05/18/HashMap解析/index.html">
 <meta property="og:site_name" content="既然来了就坐坐吧">
-<meta property="og:description" content="此广告位长年招租">
+<meta property="og:description" content="简述HashMap 是我们在 java 中最频繁出现的一种数据存储工具. 它以 键-值 对的方式来存储数据,作为一个高效存储工具,它很频繁的受到了我们的使用.但是其内部实现原理很多人都不是特别清楚,在这里我们一起研究一下. 属性 table:使用 Node&amp;lt;K,V&amp;gt; 对象进行数据的存储是一个链表,它有四个属性,分别是 哈希值, key, value, 指向下一个节点的指针. entry">
+<meta property="og:updated_time" content="2017-05-19T02:01:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="既然来了就坐坐吧">
-<meta name="twitter:description" content="此广告位长年招租">
+<meta name="twitter:title" content="HashMap解析">
+<meta name="twitter:description" content="简述HashMap 是我们在 java 中最频繁出现的一种数据存储工具. 它以 键-值 对的方式来存储数据,作为一个高效存储工具,它很频繁的受到了我们的使用.但是其内部实现原理很多人都不是特别清楚,在这里我们一起研究一下. 属性 table:使用 Node&amp;lt;K,V&amp;gt; 对象进行数据的存储是一个链表,它有四个属性,分别是 哈希值, key, value, 指向下一个节点的指针. entry">
 
 
 
@@ -128,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/04/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/18/HashMap解析/"/>
 
 
 
 
 
-  <title>归档 | 既然来了就坐坐吧</title>
+  <title>HashMap解析 | 既然来了就坐坐吧</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -178,7 +180,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -272,140 +274,195 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 11 篇日志。 继续努力。
-    </span>
-
+  <div id="posts" class="posts-expand">
     
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/26/Java异步调用1/" itemprop="url">
-              
-                <span itemprop="name">Java异步调用1</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-26T23:42:25+08:00"
-              content="2017-04-26" >
-          04-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/25/当-java-中遇到-scala-中的-Seq-对象/" itemprop="url">
-              
-                <span itemprop="name">当 Java 遇到 Scala 中的 Seq 对象</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-25T23:31:46+08:00"
-              content="2017-04-25" >
-          04-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/25/货币金额计算/" itemprop="url">
-              
-                <span itemprop="name">货币金额计算</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-25T23:06:04+08:00"
-              content="2017-04-25" >
-          04-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/18/HashMap解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yellow_head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="既然来了就坐坐吧">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                HashMap解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-18T21:56:15+08:00">
+                2017-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p><code>HashMap</code> 是我们在 java 中最频繁出现的一种数据存储工具. 它以 键-值 对的方式来存储数据,作为一个高效存储工具,它很频繁的受到了我们的使用.<br>但是其内部实现原理很多人都不是特别清楚,在这里我们一起研究一下.</p>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><ul>
+<li><code>table</code>:使用 <code>Node&lt;K,V&gt;</code> 对象进行数据的存储是一个链表,它有四个属性,分别是 哈希值, key, value, 指向下一个节点的指针.</li>
+<li><code>entrySet</code>: 键值对的集合来存储对应的集合数据.</li>
+<li><code>size</code>: 表示键值对集合的大小</li>
+<li><code>modCount</code> 修改次数,和 <code>ArrayList</code> 类似,表示修改次数,用以确保同步.</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Map/" rel="tag"># Map</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/30/Java8-Optional-解析/" rel="next" title="Java8 : Optional 解析">
+                <i class="fa fa-chevron-left"></i> Java8 : Optional 解析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/16/LocalDateTime-简述/" rel="prev" title="LocalDateTime 简述">
+                LocalDateTime 简述 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -413,6 +470,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -432,8 +493,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/yellow_head.png"
@@ -513,6 +583,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简述"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#属性"><span class="nav-number">2.</span> <span class="nav-text">属性</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -638,11 +724,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
 
 
   
@@ -711,26 +795,6 @@
 
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
